@@ -9,6 +9,21 @@ import { stegaClean } from "next-sanity";
  * make it invalid to a crawler.
  */
 
+/**
+ * Serializes structured data for embedding in a `<script>` tag.
+ *
+ * CMS text can contain `<`, and an unescaped `</script>` inside a JSON-LD block ends the
+ * script element early and turns the remainder of the payload into markup. Escaping `<` to
+ * its unicode form is still valid JSON and closes that off; `>` and `&` are escaped for the
+ * same class of reason.
+ */
+export function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+}
+
 function clean(value: string | null | undefined): string | undefined {
   const cleaned = stegaClean(value);
   return typeof cleaned === "string" && cleaned.length > 0 ? cleaned : undefined;

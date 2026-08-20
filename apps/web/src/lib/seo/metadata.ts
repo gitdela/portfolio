@@ -6,6 +6,12 @@ import { siteUrl } from "@/lib/env";
 import { hasImage, imageAlt, imageUrl, type SanityImageValue } from "@/lib/sanity/image";
 import { loadPublishedQuery } from "@/lib/sanity/loadQuery";
 import { documentTypeTag } from "@/lib/sanity/tags";
+import {
+  resolveCanonicalPath,
+  resolveDescription,
+  resolveNoIndex,
+  resolveTitle,
+} from "@/lib/seo/cascade";
 
 const SETTINGS_TAGS = [documentTypeTag("siteSettings"), documentTypeTag("profile")];
 
@@ -93,17 +99,29 @@ export interface PageSeoInput {
 export async function buildPageMetadata(input: PageSeoInput): Promise<Metadata> {
   const settings = await loadSettings();
 
-  const title = input.seo?.title ?? input.title ?? settings?.defaultTitle ?? settings?.siteName;
-  const description =
-    input.seo?.description ?? input.description ?? settings?.defaultDescription ?? "";
+  const sources = {
+    overrideTitle: input.seo?.title,
+    overrideDescription: input.seo?.description,
+    documentTitle: input.title,
+    documentDescription: input.description,
+    defaultTitle: settings?.defaultTitle,
+    defaultDescription: settings?.defaultDescription,
+    siteName: settings?.siteName,
+  };
+
+  const title = resolveTitle(sources);
+  const description = resolveDescription(sources);
 
   const image =
     socialImage(input.seo?.image) ??
     socialImage(input.image) ??
     socialImage(settings?.defaultSocialImage);
 
-  const canonical = input.path.startsWith("/") ? input.path : `/${input.path}`;
-  const noIndex = input.seo?.noIndex === true || process.env.VERCEL_ENV !== "production";
+  const canonical = resolveCanonicalPath(input.path);
+  const noIndex = resolveNoIndex({
+    documentNoIndex: input.seo?.noIndex,
+    vercelEnv: process.env.VERCEL_ENV,
+  });
 
   return {
     ...(title ? { title } : {}),
