@@ -1,0 +1,8 @@
+* text=auto eol=lf
+
+# Generated but committed — CI regenerates these and fails on drift, so keep
+# their diffs reviewable rather than collapsed.
+packages/sanity/schema.json linguist-generated=true
+packages/sanity/src/generated/** linguist-generated=true
+
+bun.lock linguist-generated=true -diff

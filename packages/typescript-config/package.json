@@ -1,0 +1,18 @@
+{
+  "name": "@portfolio/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "exports": {
+    "./base.json": "./base.json",
+    "./library.json": "./library.json",
+    "./nextjs.json": "./nextjs.json",
+    "./sanity-studio.json": "./sanity-studio.json"
+  },
+  "files": [
+    "base.json",
+    "library.json",
+    "nextjs.json",
+    "sanity-studio.json"
+  ]
+}

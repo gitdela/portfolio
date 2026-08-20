@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+.vercel/
+
+# Lockfile and generated Sanity artifacts are machine-owned.
+bun.lock
+packages/sanity/schema.json
+packages/sanity/src/generated/

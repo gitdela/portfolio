@@ -1,0 +1,12 @@
+[install]
+# Isolated linker: each workspace resolves only what it declares, so an
+# undeclared import fails at install time instead of leaking through a
+# hoisted root node_modules.
+linker = "isolated"
+
+# Commit the reviewable text lockfile rather than the binary bun.lockb.
+saveTextLockfile = true
+
+# Ranges stay in package.json; the lockfile is the single source of exact
+# versions, which is what `--frozen-lockfile` reproduces in CI.
+exact = false
