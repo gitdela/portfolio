@@ -58,7 +58,6 @@ Every root script delegates to `turbo run`; the real work lives in workspace pac
 | `bun run lint`      | ESLint across workspaces                    |
 | `bun run typecheck` | TypeScript, no emit                         |
 | `bun run test`      | Bun unit tests                              |
-| `bun run test:e2e`  | Playwright                                  |
 | `bun run typegen`   | Regenerate Sanity schema + types (uncached) |
 | `bun run deploy`    | Deployment tasks (uncached)                 |
 | `bun run format`    | Prettier write; `format:check` verifies     |
@@ -90,6 +89,12 @@ packages/
   serializing the tasks behind their dependencies.
 - **Strict env.** `turbo.json` uses `envMode: "strict"`, and `eslint-plugin-turbo` fails the lint
   when code reads an environment variable that `turbo.json` does not declare.
+
+## Decisions that depart from the plan
+
+- **No Playwright.** `docs/plan.md` §7 calls for end-to-end tests; that was dropped by
+  explicit decision. The unit and Lighthouse layers of §7 still stand. Re-adding it later is
+  `bun add -d @playwright/test` plus a `test:e2e` task.
 
 ## Version decisions
 

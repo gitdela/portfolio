@@ -29,7 +29,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.1",
     "@portfolio/eslint-config": "workspace:*",
     "@portfolio/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.3",
