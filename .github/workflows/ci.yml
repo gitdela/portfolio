@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Full history so `turbo --affected` can diff against the base commit.
           fetch-depth: 0
@@ -118,6 +118,11 @@ jobs:
           RESEND_API_KEY: re_ci_placeholder
           RESEND_FROM_EMAIL: contact@send.example.com
           CONTACT_TO_EMAIL: ci@example.com
+          # `turbo run build` covers both workspaces, and `sanity build` re-runs schema
+          # extraction, so the Studio needs its config here as well as on the typegen step.
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID || 'ci000000' }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET || 'production' }}
+          SANITY_STUDIO_PREVIEW_URL: http://localhost:3000
         run: |
           # `--affected` needs a reliable base commit. A pull request has one; a push to main
           # does not always (a force-push or first commit gives no usable `before`), so that
@@ -142,7 +147,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: oven-sh/setup-bun@v2
         with:

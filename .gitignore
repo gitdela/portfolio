@@ -3,6 +3,10 @@ node_modules/
 .pnp.*
 
 # Build output
+# next-env.d.ts is generated, and its contents differ depending on whether `next dev` or
+# `next build` ran last (.next/dev/types vs .next/types), so tracking it means a dirty tree
+# every time you switch. Typecheck passes without it.
+next-env.d.ts
 .next/
 out/
 dist/
