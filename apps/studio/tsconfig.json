@@ -1,0 +1,5 @@
+{
+  "extends": "@portfolio/typescript-config/sanity-studio.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "sanity.config.ts", "sanity.cli.ts"],
+  "exclude": ["node_modules", "dist"]
+}

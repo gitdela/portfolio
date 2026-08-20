@@ -1,0 +1,35 @@
+{
+  "name": "@portfolio/sanity",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    "./schema": "./src/schema/index.ts",
+    "./queries": "./src/queries/index.ts",
+    "./types": "./src/generated/sanity.types.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/client": "catalog:",
+    "@sanity/icons": "^5.2.1",
+    "groq": "^6.10.1"
+  },
+  "devDependencies": {
+    "@portfolio/eslint-config": "workspace:*",
+    "@portfolio/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "sanity": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "sanity": "^6.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "env": [
+        "SANITY_STUDIO_PROJECT_ID",
+        "SANITY_STUDIO_DATASET",
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_APP_ID"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true,
+      "env": [
+        "SANITY_STUDIO_PROJECT_ID",
+        "SANITY_STUDIO_DATASET",
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_APP_ID"
+      ]
+    },
+    "typegen": {
+      "cache": false,
+      "env": ["SANITY_STUDIO_PROJECT_ID", "SANITY_STUDIO_DATASET", "SANITY_STUDIO_PREVIEW_URL"]
+    },
+    "deploy": {
+      "dependsOn": ["build", "lint", "typecheck"],
+      "cache": false,
+      "env": [
+        "SANITY_STUDIO_PROJECT_ID",
+        "SANITY_STUDIO_DATASET",
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_APP_ID",
+        "SANITY_AUTH_TOKEN"
+      ]
+    },
+    "lint": {
+      "dependsOn": ["topo"],
+      "env": [
+        "SANITY_STUDIO_PROJECT_ID",
+        "SANITY_STUDIO_DATASET",
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_APP_ID",
+        "SANITY_AUTH_TOKEN"
+      ]
+    }
+  }
+}

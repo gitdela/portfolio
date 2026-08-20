@@ -1,0 +1,34 @@
+{
+  "name": "@portfolio/studio",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "dev": "sanity dev",
+    "lint": "eslint .",
+    "start": "sanity start",
+    "typecheck": "tsc --noEmit",
+    "typegen": "sanity schema extract --force && sanity typegen generate"
+  },
+  "dependencies": {
+    "@portfolio/sanity": "workspace:*",
+    "@sanity/icons": "^5.2.1",
+    "@sanity/vision": "^6.10.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sanity": "catalog:",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@portfolio/eslint-config": "workspace:*",
+    "@portfolio/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}
