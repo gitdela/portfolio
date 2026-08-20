@@ -7,7 +7,25 @@ import { z } from "zod";
  * from a test would trip its module-scope parse before the test could set anything up.
  */
 
-export const publicEnvSchema = z.object({
+/**
+ * Treats an empty string as absent.
+ *
+ * Dashboards and CI systems routinely hand back "" for a variable that was created but
+ * never filled in. Without this, "" reaches a format check and fails with a confusing
+ * "must be an absolute URL" instead of falling through to a default or reporting the
+ * variable as missing.
+ */
+function blankToUndefined(value: unknown): unknown {
+  if (typeof value !== "object" || value === null) return value;
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>).map(([key, entry]) => [
+      key,
+      typeof entry === "string" && entry.trim() === "" ? undefined : entry,
+    ]),
+  );
+}
+
+const publicEnvShape = z.object({
   // Optional here because a first deployment cannot know its own URL yet; `resolveSiteUrl`
   // below decides the canonical origin and throws if it cannot find one.
   NEXT_PUBLIC_SITE_URL: z
@@ -26,7 +44,9 @@ export const publicEnvSchema = z.object({
   NEXT_PUBLIC_SANITY_API_HOST: z.url().optional(),
 });
 
-export const serverEnvSchema = z.object({
+export const publicEnvSchema = z.preprocess(blankToUndefined, publicEnvShape);
+
+const serverEnvShape = z.object({
   SANITY_API_READ_TOKEN: z.string().min(1),
   SANITY_REVALIDATE_SECRET: z.string().min(1),
   TURNSTILE_SECRET_KEY: z.string().min(1),
@@ -35,8 +55,10 @@ export const serverEnvSchema = z.object({
   CONTACT_TO_EMAIL: z.email(),
 });
 
-export type PublicEnv = z.infer<typeof publicEnvSchema>;
-export type ServerEnv = z.infer<typeof serverEnvSchema>;
+export const serverEnvSchema = z.preprocess(blankToUndefined, serverEnvShape);
+
+export type PublicEnv = z.infer<typeof publicEnvShape>;
+export type ServerEnv = z.infer<typeof serverEnvShape>;
 
 /** Renders validation failures as one message per offending variable. */
 export function formatEnvIssues(error: z.ZodError): string {

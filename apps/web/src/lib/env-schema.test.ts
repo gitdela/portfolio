@@ -171,3 +171,42 @@ describe("resolveSiteUrl", () => {
     );
   });
 });
+
+describe("empty strings are treated as absent", () => {
+  test("an empty optional URL falls through instead of failing format validation", () => {
+    // Vercel and similar dashboards hand back "" for a variable created but left blank.
+    const result = publicEnvSchema.safeParse({
+      ...validPublic,
+      NEXT_PUBLIC_SITE_URL: "",
+      NEXT_PUBLIC_SANITY_STUDIO_URL: "",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.NEXT_PUBLIC_SITE_URL).toBeUndefined();
+      expect(result.data.NEXT_PUBLIC_SANITY_STUDIO_URL).toBeUndefined();
+    }
+  });
+
+  test("whitespace-only counts as empty too", () => {
+    const result = publicEnvSchema.safeParse({ ...validPublic, NEXT_PUBLIC_SITE_URL: "   " });
+    expect(result.success).toBe(true);
+  });
+
+  test("an empty required variable reports as missing, not malformed", () => {
+    const result = publicEnvSchema.safeParse({ ...validPublic, NEXT_PUBLIC_SANITY_PROJECT_ID: "" });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(formatEnvIssues(result.error)).toContain("NEXT_PUBLIC_SANITY_PROJECT_ID");
+    }
+  });
+
+  test("real values are untouched", () => {
+    const result = publicEnvSchema.safeParse(validPublic);
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.NEXT_PUBLIC_SITE_URL).toBe("https://example.com");
+  });
+
+  test("the server schema does the same", () => {
+    expect(serverEnvSchema.safeParse({ ...validServer, RESEND_API_KEY: "" }).success).toBe(false);
+  });
+});
