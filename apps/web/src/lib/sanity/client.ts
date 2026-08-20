@@ -20,6 +20,10 @@ export const client = createClient({
   apiVersion: publicEnv.NEXT_PUBLIC_SANITY_API_VERSION,
   useCdn: !apiHost,
   perspective: "published",
-  stega: { enabled: false, studioUrl: publicEnv.NEXT_PUBLIC_SANITY_STUDIO_URL },
+  // studioUrl only anchors click-to-edit links. With stega off it does nothing, so an
+  // unset Studio URL is not a reason to fail a build.
+  stega: publicEnv.NEXT_PUBLIC_SANITY_STUDIO_URL
+    ? { enabled: false, studioUrl: publicEnv.NEXT_PUBLIC_SANITY_STUDIO_URL }
+    : { enabled: false },
   ...(apiHost ? { apiHost } : {}),
 });

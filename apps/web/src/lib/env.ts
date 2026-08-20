@@ -1,6 +1,6 @@
 import {
   formatEnvIssues,
-  normalizeSiteUrl,
+  resolveSiteUrl,
   publicEnvSchema,
   serverEnvSchema,
   type ServerEnv,
@@ -36,10 +36,16 @@ if (!parsedPublic.success) {
 export const publicEnv = parsedPublic.data;
 
 /**
- * The canonical origin, always derived from configuration rather than from an incidental
- * deployment URL.
+ * The canonical origin. Explicit configuration first, then Vercel's stable production
+ * domain — never the per-deployment URL.
+ *
+ * Server-side only: VERCEL_PROJECT_PRODUCTION_URL is not a NEXT_PUBLIC_ variable, so it is
+ * not inlined into the client bundle. Every consumer of this is a server module.
  */
-export const siteUrl = normalizeSiteUrl(publicEnv.NEXT_PUBLIC_SITE_URL);
+export const siteUrl = resolveSiteUrl({
+  explicit: publicEnv.NEXT_PUBLIC_SITE_URL,
+  vercelProductionUrl: process.env.VERCEL_PROJECT_PRODUCTION_URL,
+});
 
 let cachedServerEnv: ServerEnv | null = null;
 

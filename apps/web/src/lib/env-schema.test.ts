@@ -1,6 +1,12 @@
 import { describe, expect, test } from "bun:test";
 
-import { formatEnvIssues, normalizeSiteUrl, publicEnvSchema, serverEnvSchema } from "./env-schema";
+import {
+  formatEnvIssues,
+  normalizeSiteUrl,
+  publicEnvSchema,
+  resolveSiteUrl,
+  serverEnvSchema,
+} from "./env-schema";
 
 const validPublic = {
   NEXT_PUBLIC_SITE_URL: "https://example.com",
@@ -66,13 +72,26 @@ describe("publicEnvSchema", () => {
     ).toBe(false);
   });
 
-  test("reports every missing variable at once, not just the first", () => {
+  test("reports every missing required variable at once, not just the first", () => {
     const result = publicEnvSchema.safeParse({});
     expect(result.success).toBe(false);
     if (!result.success) {
       const message = formatEnvIssues(result.error);
-      for (const key of Object.keys(validPublic)) expect(message).toContain(key);
+      // The two URL variables are optional; a first deployment cannot know them yet.
+      for (const key of [
+        "NEXT_PUBLIC_SANITY_PROJECT_ID",
+        "NEXT_PUBLIC_SANITY_DATASET",
+        "NEXT_PUBLIC_SANITY_API_VERSION",
+        "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+      ]) {
+        expect(message).toContain(key);
+      }
     }
+  });
+
+  test("builds without a site or Studio URL — those are resolved, not required", () => {
+    const { NEXT_PUBLIC_SITE_URL: _a, NEXT_PUBLIC_SANITY_STUDIO_URL: _b, ...rest } = validPublic;
+    expect(publicEnvSchema.safeParse(rest).success).toBe(true);
   });
 });
 
@@ -111,5 +130,44 @@ describe("normalizeSiteUrl", () => {
 
   test("leaves a path prefix intact apart from the trailing slash", () => {
     expect(normalizeSiteUrl("https://example.com/site/")).toBe("https://example.com/site");
+  });
+});
+
+describe("resolveSiteUrl", () => {
+  test("prefers the explicit setting over anything Vercel provides", () => {
+    expect(
+      resolveSiteUrl({
+        explicit: "https://kennartey.com",
+        vercelProductionUrl: "portfolio.vercel.app",
+      }),
+    ).toBe("https://kennartey.com");
+  });
+
+  test("falls back to Vercel's production domain, adding the scheme it omits", () => {
+    expect(resolveSiteUrl({ vercelProductionUrl: "portfolio.vercel.app" })).toBe(
+      "https://portfolio.vercel.app",
+    );
+  });
+
+  test("tolerates a production domain that already carries a scheme", () => {
+    expect(resolveSiteUrl({ vercelProductionUrl: "https://portfolio.vercel.app" })).toBe(
+      "https://portfolio.vercel.app",
+    );
+  });
+
+  test("normalizes the fallback the same way as an explicit value", () => {
+    expect(resolveSiteUrl({ vercelProductionUrl: "portfolio.vercel.app/" })).toBe(
+      "https://portfolio.vercel.app",
+    );
+  });
+
+  test("throws with an actionable message when neither source exists", () => {
+    expect(() => resolveSiteUrl({})).toThrow(/NEXT_PUBLIC_SITE_URL/);
+  });
+
+  test("an empty explicit value falls through rather than yielding an empty origin", () => {
+    expect(resolveSiteUrl({ explicit: "", vercelProductionUrl: "portfolio.vercel.app" })).toBe(
+      "https://portfolio.vercel.app",
+    );
   });
 });
