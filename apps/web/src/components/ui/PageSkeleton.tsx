@@ -3,16 +3,21 @@ import { PageMain } from "@/components/ui/primitives";
 /**
  * Loading placeholder shaped like a standard page: title, lead paragraph, then body.
  *
- * IMPORTANT — where this may be mounted.
+ * DO NOT mount this as a route-level `loading.tsx`. It was, and it broke two things:
  *
- * A `loading.tsx` wraps its segment *and every child segment* in a Suspense boundary. That
- * makes the response stream, which means the HTTP status is sent before the page component
- * runs. Any route beneath it that calls `notFound()` then returns 200 with 404 content — a
- * soft 404 that crawlers will happily index.
+ *  1. A `loading.tsx` wraps its segment *and every child segment* in a Suspense boundary,
+ *     so the response streams and the HTTP status is sent before the page component runs.
+ *     Any route beneath it calling `notFound()` then returned 200 with 404 content — a soft
+ *     404 that crawlers index as a valid page.
  *
- * So this is mounted only on leaf segments with no `notFound()` beneath them: /about,
- * /contact, /privacy. It must NOT be mounted at the app root, at /work, or at /blog, since
- * those are parents of `[slug]` routes that depend on a real 404 status.
+ *  2. Worse, on `/about` and `/privacy` the RSC flight payload serialized this fallback as
+ *     the resolved content and never emitted a resolve chunk. The server HTML painted the
+ *     real page, then hydration reconciled against the payload and replaced it with these
+ *     pulsing blocks — permanently. `/privacy` is fully static and still did it, so it was
+ *     the boundary itself, not slow data.
+ *
+ * Use it only inside an explicit `<Suspense fallback={<PageSkeleton />}>` around a subtree
+ * that genuinely suspends, and verify the payload resolves before shipping it.
  */
 export function PageSkeleton() {
   return (
