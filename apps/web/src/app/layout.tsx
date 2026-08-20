@@ -73,8 +73,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </ThemeProvider>
         </NuqsAdapter>
 
-        <SanityLive />
-        {isDraftMode ? <VisualEditing /> : null}
+        {/*
+          Both are editor-only. SanityLive opens a long-lived connection to Sanity's live
+          events stream, which exists to push draft edits into the Presentation preview —
+          the published site has nothing to do with it and invalidates through the
+          revalidation webhook's cache tags instead.
+
+          Mounting it unconditionally meant every visitor opened that stream using the
+          browser token, and when the token is absent or wrong the request fails before
+          CORS headers come back, which the browser reports as a CORS error.
+        */}
+        {isDraftMode ? (
+          <>
+            <SanityLive />
+            <VisualEditing />
+          </>
+        ) : null}
         <Analytics />
         <SpeedInsights />
       </body>
