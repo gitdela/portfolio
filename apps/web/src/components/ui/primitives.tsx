@@ -82,7 +82,7 @@ export function SecondaryPill({
 /** A skill chip. */
 export function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full bg-chip px-[14px] py-[5px] text-chip font-semibold">
+    <span className="rounded-full bg-chip px-[14px] py-[5px] text-tag font-semibold">
       {children}
     </span>
   );

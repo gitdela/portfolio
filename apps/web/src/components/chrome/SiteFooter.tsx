@@ -15,7 +15,7 @@ export interface SiteFooterProps {
  */
 export function SiteFooter({ email, location, socialProfiles }: SiteFooterProps) {
   return (
-    <footer className="mt-24 flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-5 text-chip text-soft">
+    <footer className="mt-24 flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-5 text-tag text-soft">
       {email ? (
         <a href={`mailto:${email}`} className="text-accent hover:underline">
           {email}

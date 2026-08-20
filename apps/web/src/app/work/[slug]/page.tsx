@@ -178,7 +178,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             {caseStudy.relatedTag?.slug ? (
               <Link
                 href={`/blog?tag=${caseStudy.relatedTag.slug}` as Route}
-                className="text-chip text-soft hover:underline"
+                className="text-tag text-soft hover:underline"
               >
                 All {caseStudy.relatedTag.title} posts
               </Link>

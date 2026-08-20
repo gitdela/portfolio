@@ -83,7 +83,7 @@ export function ContactForm({
       ) : null}
 
       <div className="grid gap-1.5">
-        <label htmlFor="cf-name" className="text-chip font-bold">
+        <label htmlFor="cf-name" className="text-tag font-bold">
           Name
         </label>
         <input
@@ -101,7 +101,7 @@ export function ContactForm({
       </div>
 
       <div className="grid gap-1.5">
-        <label htmlFor="cf-email" className="text-chip font-bold">
+        <label htmlFor="cf-email" className="text-tag font-bold">
           Email
         </label>
         <input
@@ -119,7 +119,7 @@ export function ContactForm({
       </div>
 
       <div className="grid gap-1.5">
-        <label htmlFor="cf-message" className="text-chip font-bold">
+        <label htmlFor="cf-message" className="text-tag font-bold">
           Message
         </label>
         <textarea

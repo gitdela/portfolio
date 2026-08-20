@@ -70,7 +70,7 @@ export default async function AboutPage() {
           <div className="grid gap-[22px]">
             {page.experiences.map((entry) => (
               <div key={entry._id} className="flex flex-wrap gap-x-4 gap-y-1.5">
-                <div className="w-[110px] flex-none text-chip font-bold whitespace-nowrap text-accent">
+                <div className="w-[110px] flex-none text-tag font-bold whitespace-nowrap text-accent">
                   {entry.periodLabel}
                 </div>
                 <div className="min-w-[240px] flex-1">

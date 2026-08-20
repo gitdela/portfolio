@@ -136,7 +136,7 @@ export default async function HomePage() {
                 className="m-0 border-l-[3px] border-accent pl-[18px]"
               >
                 <p className="m-0 text-quote">{testimonial.quote}</p>
-                <footer className="mt-2 text-chip text-soft">{testimonial.attribution}</footer>
+                <footer className="mt-2 text-tag text-soft">{testimonial.attribution}</footer>
               </blockquote>
             ))}
           </div>

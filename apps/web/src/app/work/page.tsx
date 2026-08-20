@@ -48,7 +48,7 @@ export default async function WorkPage() {
               <p className="mt-2 mb-0 text-muted">{project.summary}</p>
 
               {project.stack?.length ? (
-                <p className="mt-2 mb-0 text-chip text-soft italic">{project.stack.join(" · ")}</p>
+                <p className="mt-2 mb-0 text-tag text-soft italic">{project.stack.join(" · ")}</p>
               ) : null}
 
               <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-2 text-body-sm font-bold">
