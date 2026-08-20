@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a3b8f'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-weight='700' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf9fc;--ink:#26262b;--muted:#63636b;--soft:#8a8a94;--line:#e6e3ef;--accent:#4a3b8f;--card:#ffffff;--chip:#f1eff7}
+html[data-theme="dark"]{--bg:#15141a;--ink:#ecebf2;--muted:#a8a6b4;--soft:#7c7a8a;--line:#2b2936;--accent:#a89aec;--card:#1d1b25;--chip:#242231}
+body{margin:0;background:var(--bg);transition:background 0.25s}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+</style>
+</helmet>
+<div data-screen-label="Portfolio Home" style="min-height:100vh;font-family:'Lato',Arial,sans-serif;color:var(--ink);font-size:16px;line-height:1.65">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 16px;max-width:680px;margin:0 auto;padding:20px clamp(18px,5vw,28px) 0">
+    <a href="Portfolio%20Home.dc.html" style="display:inline-block;color:var(--ink)" style-hover="text-decoration:none">
+      <span style="display:block;font-size:16px;letter-spacing:0.13em;line-height:1.2"><span style="font-weight:700">KEN</span><span style="font-weight:300">NARTEY</span></span>
+      <span style="display:block;width:20px;height:2.5px;background:var(--accent);margin-top:3px"></span>
+    </a>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14.5px">
+      <a href="Portfolio%20Home.dc.html" style="color:var(--ink);font-weight:700">Home</a>
+      <a href="Portfolio%20Work.dc.html">Work</a>
+      <a href="Portfolio%20About.dc.html">About</a>
+      <a href="Portfolio%20Blog.dc.html">Blog</a>
+      <a href="Portfolio%20Contact.dc.html">Contact</a>
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></sc-if>
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></sc-if>
+      </button>
+    </div>
+  </nav>
+  <main style="max-width:680px;margin:0 auto;padding:clamp(48px,10vw,88px) clamp(18px,5vw,28px) 64px">
+    <header>
+      <sc-if value="{{ showAvailability }}" hint-placeholder-val="{{ true }}">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:20px">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--accent)"></span>
+          Available for work
+        </div>
+      </sc-if>
+      <h1 style="margin:0;font-size:clamp(30px,7vw,42px);font-weight:700;letter-spacing:-0.01em;line-height:1.18">I build web products that are fast, polished, and easy to find.</h1>
+      <p style="margin:16px 0 0;font-size:18px;color:var(--muted)">I'm Kenneth Dela Nartey — a software engineer in Accra shipping production apps with React, Next.js, and Node.js. Frontend craft, backend logic, and SEO that actually ranks.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:26px;font-size:15.5px;font-weight:700">
+        <a href="Portfolio%20Work.dc.html" style="background:var(--accent);color:var(--bg);padding:10px 20px;border-radius:999px">See my work →</a>
+        <a href="Portfolio%20Contact.dc.html" style="border:1.5px solid var(--line);padding:10px 20px;border-radius:999px;color:var(--ink)">Get in touch</a>
+      </div>
+    </header>
+<section style="margin-top:80px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">Skills</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:24px"></div>
+      <div style="display:grid;gap:20px">
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">Frontend</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">JavaScript</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">TypeScript</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">React</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Next.js</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Vite</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">React Router</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Tailwind CSS</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">shadcn/ui</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">TanStack Query</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">TanStack Form</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Recharts</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">Backend &amp; Data</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Node.js</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Express</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Hono</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">REST APIs</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">OpenAPI</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">PostgreSQL</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Neon</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Drizzle ORM</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Appwrite</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Sanity CMS</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Better Auth</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Webhooks</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Background Workers</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">Infrastructure &amp; Tooling</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bun</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Turborepo</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Git</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Docker</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">DigitalOcean</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Cloudflare</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Vercel</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Caddy</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Nginx</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bash</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Linux</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">Testing &amp; Observability</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bun Test</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bruno</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Pino</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Grafana</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Prometheus</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Loki</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Monitoring &amp; Alerting</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">Blockchain &amp; Fintech</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bitcoin Core</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Electrs</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">bitcoinjs-lib</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">PSBT</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Bitcoin Wallet Infrastructure</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Double-Entry Ledgers</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Paystack</span></div>
+        </div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--soft);margin-bottom:10px">SEO &amp; Web Quality</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Technical SEO</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Web Performance</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">Accessibility</span><span style="background:var(--chip);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600">SEMrush</span></div>
+        </div>
+      </div>
+    </section>
+    <section style="margin-top:80px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">Featured Work</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:24px"></div>
+      <div style="display:grid;gap:14px">
+        <a href="Portfolio%20Case%20Study%20-%20Mybitstore.dc.html" style="display:block;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:20px 22px;color:var(--ink);text-decoration:none" style-hover="border-color:var(--accent)">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+            <span style="font-size:18px;font-weight:700">Mybitstore — web platform</span>
+            <span style="font-size:13px;color:var(--accent);font-weight:700;white-space:nowrap">Case study →</span>
+          </div>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:15px">Rebuilt the website, web app, admin dashboard, and blog of a crypto marketplace.</p>
+        </a>
+        <a href="Portfolio%20Work.dc.html" style="display:block;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:20px 22px;color:var(--ink);text-decoration:none" style-hover="border-color:var(--accent)">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+            <span style="font-size:18px;font-weight:700">Shipping logistics platform</span>
+            <span style="font-size:13px;color:var(--accent);font-weight:700;white-space:nowrap">2025</span>
+          </div>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:15px">Shipment tracking, cost calculation, and multi-warehouse inventory on Appwrite.</p>
+        </a>
+        <a href="Portfolio%20Work.dc.html" style="display:block;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:20px 22px;color:var(--ink);text-decoration:none" style-hover="border-color:var(--accent)">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+            <span style="font-size:18px;font-weight:700">Banking web application</span>
+            <span style="font-size:13px;color:var(--accent);font-weight:700;white-space:nowrap">2025</span>
+          </div>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:15px">A modern, responsive banking app built with Next.js and Shadcn/UI.</p>
+        </a>
+      </div>
+    </section>
+
+    <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
+    <section style="margin-top:80px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">What people say</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:8px"></div>
+      <p style="margin:0 0 24px;font-size:13px;font-style:italic;color:var(--soft)">Placeholder quotes — send real ones and I'll swap them in.</p>
+      <div style="display:grid;gap:20px">
+        <blockquote style="margin:0;border-left:3px solid var(--accent);padding-left:18px">
+          <p style="margin:0;font-size:16.5px">"Ken took our scattered web presence and turned it into one coherent, fast product. He ships quickly and sweats the details."</p>
+          <footer style="margin-top:8px;font-size:13.5px;color:var(--soft)">Product Lead, Mybitstore</footer>
+        </blockquote>
+        <blockquote style="margin:0;border-left:3px solid var(--accent);padding-left:18px">
+          <p style="margin:0;font-size:16.5px">"The SEO work paid for itself — our visibility climbed within months of the relaunch."</p>
+          <footer style="margin-top:8px;font-size:13.5px;color:var(--soft)">Marketing, Mybitstore</footer>
+        </blockquote>
+      </div>
+    </section>
+    </sc-if>
+    <footer style="margin-top:96px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13.5px;color:var(--soft)">
+      <a href="mailto:kendelanartey@gmail.com">kendelanartey@gmail.com</a>
+      <a href="https://github.com/gitdela">github.com/gitdela</a>
+      <a href="https://linkedin.com/in/ken-nartey">LinkedIn</a>
+      <span>Accra, Ghana</span>
+    </footer>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showAvailability&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { theme: localStorage.getItem('kn-theme') || 'dark' };
+  componentDidMount() { document.documentElement.dataset.theme = this.state.theme; }
+  renderVals() {
+    return {
+      isDark: this.state.theme === 'dark',
+      isLight: this.state.theme !== 'dark',
+      toggleTheme: () => this.setState(s => {
+        const t = s.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('kn-theme', t);
+        document.documentElement.dataset.theme = t;
+        return { theme: t };
+      }),
+      showAvailability: this.props.showAvailability ?? true,
+      showTestimonials: this.props.showTestimonials ?? true,
+    };
+  }
+}
+</script>
+</body>
+</html>

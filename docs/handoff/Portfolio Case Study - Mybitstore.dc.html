@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a3b8f'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-weight='700' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf9fc;--ink:#26262b;--muted:#63636b;--soft:#8a8a94;--line:#e6e3ef;--accent:#4a3b8f;--card:#ffffff;--chip:#f1eff7}
+html[data-theme="dark"]{--bg:#15141a;--ink:#ecebf2;--muted:#a8a6b4;--soft:#7c7a8a;--line:#2b2936;--accent:#a89aec;--card:#1d1b25;--chip:#242231}
+body{margin:0;background:var(--bg);transition:background 0.25s}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div data-screen-label="Case Study Mybitstore" style="min-height:100vh;font-family:'Lato',Arial,sans-serif;color:var(--ink);font-size:16px;line-height:1.65">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 16px;max-width:680px;margin:0 auto;padding:20px clamp(18px,5vw,28px) 0">
+    <a href="Portfolio%20Home.dc.html" style="display:inline-block;color:var(--ink)" style-hover="text-decoration:none">
+      <span style="display:block;font-size:16px;letter-spacing:0.13em;line-height:1.2"><span style="font-weight:700">KEN</span><span style="font-weight:300">NARTEY</span></span>
+      <span style="display:block;width:20px;height:2.5px;background:var(--accent);margin-top:3px"></span>
+    </a>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14.5px">
+      <a href="Portfolio%20Home.dc.html">Home</a>
+      <a href="Portfolio%20Work.dc.html" style="color:var(--ink);font-weight:700">Work</a>
+      <a href="Portfolio%20About.dc.html">About</a>
+      <a href="Portfolio%20Blog.dc.html">Blog</a>
+      <a href="Portfolio%20Contact.dc.html">Contact</a>
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></sc-if>
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></sc-if>
+      </button>
+    </div>
+  </nav>
+  <main style="max-width:680px;margin:0 auto;padding:clamp(40px,8vw,64px) clamp(18px,5vw,28px)">
+    <a href="Portfolio%20Work.dc.html" style="font-size:14px;font-weight:700">← All work</a>
+    <h1 style="margin:18px 0 0;font-size:clamp(28px,6vw,36px);font-weight:700;letter-spacing:-0.01em;line-height:1.2">Mybitstore: rebuilding a crypto marketplace's entire web presence</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:14px;font-size:14px;color:var(--soft)">
+      <span><strong style="color:var(--ink)">Role</strong> — Front-end Developer</span>
+      <span><strong style="color:var(--ink)">Timeline</strong> — 07/2023 – Present</span>
+      <span><strong style="color:var(--ink)">Stack</strong> — Next.js, TypeScript, Tailwind, Shadcn/UI, Sanity</span>
+    </div>
+    <div style="margin-top:36px">
+      <image-slot id="mybitstore-hero" shape="rounded" radius="14" style="width:100%;height:clamp(200px,48vw,340px)" placeholder="Drop a web-app screenshot"></image-slot>
+    </div>
+    <section style="margin-top:44px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">The problem</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <p style="margin:0;color:var(--muted)">Mybitstore's web surfaces — the marketing site, web app, admin dashboard, and blog — had grown inconsistent and dated. The UI didn't match the product's ambition, and the site was underperforming in search, leaving organic growth on the table.</p>
+    </section>
+    <section style="margin-top:40px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">The approach</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <ul style="margin:0;padding-left:18px;color:var(--muted);display:grid;gap:8px">
+        <li>Rebuilt all four surfaces on one modern stack — React, Next.js, TypeScript, Tailwind CSS, and Shadcn/UI — for a consistent design language and faster iteration.</li>
+        <li>Launched a scalable blog on Sanity CMS with structured content and SEO-ready delivery baked in.</li>
+        <li>Ran SEMrush-driven technical SEO: audits, on-page optimization, and performance work.</li>
+        <li>Designed responsive email templates for marketing and communication.</li>
+        <li>Worked daily with UX/UI designers, backend developers, and project managers to ship without seams.</li>
+      </ul>
+    </section>
+    <div style="margin-top:40px">
+      <image-slot id="mybitstore-dashboard" shape="rounded" radius="14" style="width:100%;height:clamp(200px,48vw,340px)" placeholder="Drop an admin-dashboard screenshot"></image-slot>
+    </div>
+    <section style="margin-top:40px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">The result</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <p style="margin:0;color:var(--muted)">A unified, modern web presence across all four surfaces, a blog that ships SEO-ready content on a proper CMS, and measurably improved search visibility and performance. The platform now looks and moves like the product it sells.</p>
+    </section>
+    <section style="margin-top:44px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">Related writing</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <div style="display:grid;gap:10px;font-size:15.5px">
+        <a href="Portfolio%20Blog%20Post.dc.html">Technical SEO for React apps: what actually moves rankings →</a>
+        <a href="Portfolio%20Blog.dc.html?tag=Mybitstore" style="font-size:13.5px;color:var(--soft)">All Mybitstore posts</a>
+      </div>
+    </section>
+    <div style="margin-top:56px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:24px">
+      <a href="Portfolio%20Work.dc.html" style="font-weight:700;font-size:15px">← All work</a>
+      <a href="Portfolio%20Contact.dc.html" style="background:var(--accent);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;font-size:15px">Work with me →</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: localStorage.getItem('kn-theme') || 'dark' };
+  componentDidMount() { document.documentElement.dataset.theme = this.state.theme; }
+  renderVals() {
+    return {
+      isDark: this.state.theme === 'dark',
+      isLight: this.state.theme !== 'dark',
+      toggleTheme: () => this.setState(s => {
+        const t = s.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('kn-theme', t);
+        document.documentElement.dataset.theme = t;
+        return { theme: t };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

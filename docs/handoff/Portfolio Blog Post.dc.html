@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a3b8f'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-weight='700' font-size='30' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf9fc;--ink:#26262b;--muted:#63636b;--soft:#8a8a94;--line:#e6e3ef;--accent:#4a3b8f;--card:#ffffff;--chip:#f1eff7}
+html[data-theme="dark"]{--bg:#15141a;--ink:#ecebf2;--muted:#a8a6b4;--soft:#7c7a8a;--line:#2b2936;--accent:#a89aec;--card:#1d1b25;--chip:#242231}
+body{margin:0;background:var(--bg);transition:background 0.25s}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+</style>
+</helmet>
+<div data-screen-label="Blog Post" style="min-height:100vh;font-family:'Lato',Arial,sans-serif;color:var(--ink);font-size:16px;line-height:1.65">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 16px;max-width:680px;margin:0 auto;padding:20px clamp(18px,5vw,28px) 0">
+    <a href="Portfolio%20Home.dc.html" style="display:inline-block;color:var(--ink)" style-hover="text-decoration:none">
+      <span style="display:block;font-size:16px;letter-spacing:0.13em;line-height:1.2"><span style="font-weight:700">KEN</span><span style="font-weight:300">NARTEY</span></span>
+      <span style="display:block;width:20px;height:2.5px;background:var(--accent);margin-top:3px"></span>
+    </a>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14.5px">
+      <a href="Portfolio%20Home.dc.html">Home</a>
+      <a href="Portfolio%20Work.dc.html">Work</a>
+      <a href="Portfolio%20About.dc.html">About</a>
+      <a href="Portfolio%20Blog.dc.html" style="color:var(--ink);font-weight:700">Blog</a>
+      <a href="Portfolio%20Contact.dc.html">Contact</a>
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle light/dark mode" title="Toggle light/dark mode" style="border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer" style-hover="border-color:var(--accent);color:var(--accent)">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></sc-if>
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ false }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></sc-if>
+      </button>
+    </div>
+  </nav>
+  <main style="max-width:680px;margin:0 auto;padding:clamp(44px,9vw,72px) clamp(18px,5vw,28px) 64px">
+    <a href="Portfolio%20Blog.dc.html" style="font-size:14px;font-weight:700">← All posts</a>
+    <header style="margin-top:18px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase">
+        <span>SEO</span><span style="color:var(--soft);font-weight:400;text-transform:none;letter-spacing:0">Aug 20, 2026 · 7 min read</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+        <a href="Portfolio%20Blog.dc.html?tag=Frontend" style="background:var(--chip);color:var(--muted);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600" style-hover="color:var(--accent);text-decoration:none">Frontend</a>
+        <a href="Portfolio%20Blog.dc.html?tag=Mybitstore" style="background:var(--chip);color:var(--muted);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600" style-hover="color:var(--accent);text-decoration:none">Mybitstore</a>
+        <a href="Portfolio%20Blog.dc.html?tag=Company%20work" style="background:var(--chip);color:var(--muted);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600" style-hover="color:var(--accent);text-decoration:none">Company work</a>
+      </div>
+      <h1 style="margin:10px 0 0;font-size:clamp(28px,6vw,36px);font-weight:700;letter-spacing:-0.01em;line-height:1.2">Technical SEO for React apps: what actually moves rankings</h1>
+      <p style="margin:14px 0 0;font-size:18px;color:var(--muted)">Lessons from taking a crypto marketplace's search visibility up with SEMrush and Next.js — placeholder copy showing the article layout.</p>
+    </header>
+    <article style="margin-top:44px;font-size:17px;color:var(--muted)">
+      <p style="margin:0">React apps have a reputation problem with search engines, and most of it is self-inflicted. When we started the Mybitstore rebuild, the site had real content that crawlers simply couldn't see well. This post walks through what we changed and which changes actually showed up in the rankings.</p>
+      <h2 style="margin:36px 0 4px;font-size:22px;font-weight:700;color:var(--ink)">Start with rendering, not keywords</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <p style="margin:0">Before touching a single meta tag, figure out what the crawler receives. Client-rendered pages often ship an empty shell; moving key routes to server rendering in Next.js was the single highest-impact change we made. Everything else compounds on top of it.</p>
+      <p style="margin:14px 0 0">A useful habit: fetch your page the way a bot does and read the raw HTML. If your product copy isn't in it, no amount of keyword work will save you.</p>
+      <blockquote style="margin:28px 0;border-left:3px solid var(--accent);padding-left:18px;font-size:18px;font-style:italic;color:var(--ink)">If the content isn't in the initial HTML, it doesn't exist — rankings follow rendering.</blockquote>
+      <h2 style="margin:36px 0 4px;font-size:22px;font-weight:700;color:var(--ink)">Structure the content, then the metadata</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <p style="margin:0">With rendering fixed, structured data and canonical URLs did the next chunk of work. We used SEMrush audits to find duplicate titles, orphan pages, and broken internal links — unglamorous fixes that moved more than any clever trick.</p>
+      <ul style="margin:14px 0 0;padding-left:18px;display:grid;gap:8px">
+        <li>One canonical URL per piece of content, everywhere.</li>
+        <li>Descriptive titles under 60 characters; no template leftovers.</li>
+        <li>Internal links from high-traffic pages to the pages you want lifted.</li>
+      </ul>
+      <h2 style="margin:36px 0 4px;font-size:22px;font-weight:700;color:var(--ink)">Performance is a ranking input, not a vanity metric</h2>
+      <div style="width:30px;height:3px;background:var(--accent);margin-bottom:14px"></div>
+      <p style="margin:0">Core Web Vitals moved after we cut unused JavaScript, lazy-loaded below-the-fold images, and put the site behind Cloudflare. None of it required exotic engineering — just discipline about what ships to the client.</p>
+      <p style="margin:14px 0 0">The takeaway: technical SEO for React apps is mostly good engineering with a crawler in mind. Fix rendering, fix structure, fix speed — in that order.</p>
+    </article>
+    <div style="margin-top:56px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:24px">
+      <a href="Portfolio%20Blog.dc.html" style="font-weight:700;font-size:15px">← All posts</a>
+      <a href="Portfolio%20Contact.dc.html" style="background:var(--accent);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;font-size:15px">Work with me →</a>
+    </div>
+    <footer style="margin-top:96px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13.5px;color:var(--soft)">
+      <a href="mailto:kendelanartey@gmail.com">kendelanartey@gmail.com</a>
+      <a href="https://github.com/gitdela">github.com/gitdela</a>
+      <a href="https://linkedin.com/in/ken-nartey">LinkedIn</a>
+      <span>Accra, Ghana</span>
+    </footer>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: localStorage.getItem('kn-theme') || 'dark' };
+  componentDidMount() { document.documentElement.dataset.theme = this.state.theme; }
+  renderVals() {
+    return {
+      isDark: this.state.theme === 'dark',
+      isLight: this.state.theme !== 'dark',
+      toggleTheme: () => this.setState(s => {
+        const t = s.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('kn-theme', t);
+        document.documentElement.dataset.theme = t;
+        return { theme: t };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>
