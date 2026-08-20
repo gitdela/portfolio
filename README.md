@@ -9,10 +9,37 @@ Personal portfolio and publishing platform. Architecture and product decisions l
 
 ## Getting started
 
+### Without a Sanity project
+
+The site runs with no backend at all. From `apps/web`:
+
 ```bash
 bun install
+cd apps/web && bun run dev:offline
+```
+
+That starts a local stand-in for the Sanity query API and points the app at it. The
+stand-in evaluates the app's real GROQ with `groq-js` — the same evaluator Sanity uses —
+against an empty document set, which is exactly the state a brand-new project is in. Every
+route renders its empty state, and no `.env.local` is required.
+
+To see the site with content, pass a JSON array of documents:
+
+```bash
+bun run dev:offline -- ./path/to/documents.json
+```
+
+### With a real Sanity project
+
+```bash
+bun install
+cp apps/web/.env.example apps/web/.env.local      # then fill in
+cp apps/studio/.env.example apps/studio/.env.local
 bun run dev
 ```
+
+`bun run dev` starts the web app on :3000 and Studio on :3333. Both fail fast with a list
+of missing variables rather than starting half-configured.
 
 ## Repository scripts
 

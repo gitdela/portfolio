@@ -36,7 +36,10 @@
         "TURNSTILE_SECRET_KEY",
         "RESEND_API_KEY",
         "RESEND_FROM_EMAIL",
-        "CONTACT_TO_EMAIL"
+        "CONTACT_TO_EMAIL",
+        "MOCK_SANITY_PORT",
+        "MOCK_SANITY_DATASET_FILE",
+        "PORT"
       ]
     },
     "lint": {
@@ -53,7 +56,10 @@
         "TURNSTILE_SECRET_KEY",
         "RESEND_API_KEY",
         "RESEND_FROM_EMAIL",
-        "CONTACT_TO_EMAIL"
+        "CONTACT_TO_EMAIL",
+        "MOCK_SANITY_PORT",
+        "MOCK_SANITY_DATASET_FILE",
+        "PORT"
       ]
     },
     "test": {

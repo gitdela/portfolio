@@ -7,6 +7,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --port 3000",
+    "dev:offline": "bun run scripts/dev-offline.ts",
     "lint": "eslint .",
     "start": "next start --port 3000",
     "test": "bun test",
@@ -36,6 +37,7 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "eslint": "catalog:",
+    "groq-js": "^2.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "catalog:"
   }

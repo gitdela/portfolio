@@ -20,6 +20,9 @@ const publicSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Use a dated API version, for example 2026-08-01."),
   NEXT_PUBLIC_SANITY_STUDIO_URL: z.url(),
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1),
+  // Development escape hatch: points the Sanity client at a local stand-in so the site can
+  // run without a real project. Unset in every real environment.
+  NEXT_PUBLIC_SANITY_API_HOST: z.url().optional(),
 });
 
 const serverSchema = z.object({
@@ -42,6 +45,7 @@ const parsedPublic = publicSchema.safeParse({
   NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   NEXT_PUBLIC_SANITY_STUDIO_URL: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+  NEXT_PUBLIC_SANITY_API_HOST: process.env.NEXT_PUBLIC_SANITY_API_HOST,
 });
 
 if (!parsedPublic.success) {
