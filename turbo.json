@@ -16,47 +16,37 @@
     "topo": {
       "dependsOn": ["^topo"]
     },
-
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**", "!dist/.turbo/**"],
       "outputLogs": "new-only"
     },
-
     "dev": {
       "cache": false,
-      "persistent": true,
-      "interactive": true
+      "persistent": true
     },
-
     "lint": {
       "dependsOn": ["topo"]
     },
-
     "typecheck": {
       "dependsOn": ["topo"]
     },
-
     "test": {
       "dependsOn": ["topo"],
       "outputs": ["coverage/**"]
     },
-
     "test:e2e": {
       "dependsOn": ["build"],
       "cache": false,
       "outputs": ["playwright-report/**", "test-results/**"]
     },
-
     "typegen": {
       "cache": false
     },
-
     "deploy": {
       "dependsOn": ["build", "lint", "typecheck", "test"],
       "cache": false
     },
-
     "clean": {
       "cache": false
     }
