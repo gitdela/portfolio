@@ -23,11 +23,17 @@ stand-in evaluates the app's real GROQ with `groq-js` — the same evaluator San
 against an empty document set, which is exactly the state a brand-new project is in. Every
 route renders its empty state, and no `.env.local` is required.
 
-To see the site with content, pass a JSON array of documents:
+To see the site fully populated, pass the bundled fixture:
 
 ```bash
-bun run dev:offline -- ./path/to/documents.json
+bun run dev:offline -- ./scripts/fixtures/seed.ts
 ```
+
+That fixture is development-only and is never uploaded to a dataset. Its blog posts and
+testimonials are the handoff's placeholders, present so the blog index, tag filter, article
+template, and testimonial section can be exercised — see
+[`docs/handoff-deviations.md`](docs/handoff-deviations.md). Any JSON array of Sanity
+documents works too.
 
 ### With a real Sanity project
 

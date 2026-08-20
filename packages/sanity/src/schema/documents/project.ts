@@ -39,8 +39,18 @@ export const project = defineType({
       type: "text",
       rows: 3,
       group: "overview",
-      description: "The blurb shown on the Work index and in the homepage card.",
+      description: "The blurb shown on the Work index.",
       validation: (rule) => rule.required().max(400),
+    }),
+    defineField({
+      name: "cardSummary",
+      title: "Card summary",
+      type: "text",
+      rows: 2,
+      group: "overview",
+      description:
+        "The shorter one-line blurb used on the homepage card. Falls back to the summary above when empty.",
+      validation: (rule) => rule.max(160),
     }),
     defineField({
       name: "role",

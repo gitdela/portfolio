@@ -43,11 +43,20 @@ export interface MockSanityOptions {
 
 async function loadDataset(datasetFile: string | undefined): Promise<SanityDocument[]> {
   if (!datasetFile) return [];
+
   const file = Bun.file(datasetFile);
   if (!(await file.exists())) {
     console.warn(`[mock-sanity] ${datasetFile} not found — serving an empty dataset.`);
     return [];
   }
+
+  // A .ts fixture can use helpers for Portable Text instead of hand-written JSON.
+  if (datasetFile.endsWith(".ts")) {
+    const path = datasetFile.startsWith("/") ? datasetFile : `${process.cwd()}/${datasetFile}`;
+    const fixture = (await import(path)) as { documents?: SanityDocument[] };
+    return fixture.documents ?? [];
+  }
+
   return (await file.json()) as SanityDocument[];
 }
 

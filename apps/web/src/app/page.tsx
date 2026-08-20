@@ -109,7 +109,10 @@ export default async function HomePage() {
                       {project.hasCaseStudy ? "Case study →" : project.dateLabel}
                     </span>
                   </div>
-                  <p className="mt-1.5 mb-0 text-body-sm text-muted">{project.summary}</p>
+                  {/* The handoff runs a shorter blurb here than on the Work index. */}
+                  <p className="mt-1.5 mb-0 text-body-sm text-muted">
+                    {project.cardSummary ?? project.summary}
+                  </p>
                 </Link>
               );
             })}

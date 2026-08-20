@@ -36,6 +36,7 @@ const PROJECT_CARD_FIELDS = /* groq */ `
   title,
   "slug": slug.current,
   summary,
+  cardSummary,
   role,
   dateLabel,
   timeline,

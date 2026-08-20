@@ -49,6 +49,32 @@ Taken from the markup, which the README names as authoritative.
   `padding-bottom:28px` — which the README omits.
 - **Body type is set on the page wrapper**, not `body`: 16px / line-height 1.65.
 
+## Development fixtures are not publishable content
+
+`apps/web/scripts/fixtures/seed.ts` feeds `bun run dev:offline` so the whole design can be
+exercised without a Sanity project. It is never uploaded to a dataset and never reaches the
+live site.
+
+Most of it is genuine — the handoff README states its copy is final, so the profile, hero,
+skills, projects, experience, and page copy are the real thing. Two parts are not:
+
+- **The five blog posts.** The handoff marks them "Draft". They exist in the fixture only so
+  the blog index, the `?tag=` filter, and the article template can be run. Only the technical
+  SEO post has a full body; the rest carry a one-line placeholder.
+- **The two testimonials.** Marked placeholder in the handoff, and forbidden at launch by
+  plan §1. They carry `isVerified: true` in the fixture purely so the section renders —
+  that flag is a claim about the fixture, not about the quotes.
+
+Neither may be copied into a real dataset. The launch defaults in plan §9 stand: no
+placeholder posts published, testimonials hidden until verified quotes exist.
+
+## A field the handoff implies but the plan does not name
+
+`project.cardSummary` was added after reading the markup: the homepage card runs a shorter,
+one-line blurb than the Work index does for the same project ("Rebuilt the website, web app,
+admin dashboard, and blog of a crypto marketplace." versus the full paragraph). It is
+optional and falls back to `summary`.
+
 ## Content derived from the prototype
 
 The prototype's static arrays seed the initial Sanity content model:
