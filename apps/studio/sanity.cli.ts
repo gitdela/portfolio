@@ -25,6 +25,11 @@ export default defineCliConfig({
     autoUpdates: false,
   },
 
+  // Defaults to Sanity's 3333; SANITY_STUDIO_SERVER_PORT moves it when that port is taken.
+  server: {
+    port: Number(process.env.SANITY_STUDIO_SERVER_PORT ?? "3333"),
+  },
+
   schemaExtraction: {
     enabled: true,
     path: "../../packages/sanity/schema.json",

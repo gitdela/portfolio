@@ -9,7 +9,8 @@
         "SANITY_STUDIO_PROJECT_ID",
         "SANITY_STUDIO_DATASET",
         "SANITY_STUDIO_PREVIEW_URL",
-        "SANITY_STUDIO_APP_ID"
+        "SANITY_STUDIO_APP_ID",
+        "SANITY_STUDIO_SERVER_PORT"
       ]
     },
     "dev": {
@@ -20,7 +21,8 @@
         "SANITY_STUDIO_PROJECT_ID",
         "SANITY_STUDIO_DATASET",
         "SANITY_STUDIO_PREVIEW_URL",
-        "SANITY_STUDIO_APP_ID"
+        "SANITY_STUDIO_APP_ID",
+        "SANITY_STUDIO_SERVER_PORT"
       ]
     },
     "typegen": {
@@ -45,7 +47,8 @@
         "SANITY_STUDIO_DATASET",
         "SANITY_STUDIO_PREVIEW_URL",
         "SANITY_STUDIO_APP_ID",
-        "SANITY_AUTH_TOKEN"
+        "SANITY_AUTH_TOKEN",
+        "SANITY_STUDIO_SERVER_PORT"
       ]
     }
   }

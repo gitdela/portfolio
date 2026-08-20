@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev --port 3000",
+    "dev": "next dev",
     "dev:offline": "bun run scripts/dev-offline.ts",
     "lint": "eslint .",
-    "start": "next start --port 3000",
+    "start": "next start",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
