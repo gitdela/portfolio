@@ -1,9 +1,11 @@
 import { blogPageQuery } from "@portfolio/sanity/queries";
 import type { BlogPageQueryResult } from "@portfolio/sanity/types";
 import type { Metadata, Route } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 
-import { BlogList, type BlogListPost, type BlogListTag } from "@/components/blog/BlogList";
+import { BlogList } from "@/components/blog/BlogList";
+import { BlogListFallback, type BlogListPost, type BlogListTag } from "@/components/blog/PostCards";
 import { InlineText } from "@/components/content/PortableText";
 import { PageMain } from "@/components/ui/primitives";
 import { loadQuery } from "@/lib/sanity/loadQuery";
@@ -83,11 +85,16 @@ export default async function BlogPage() {
       ) : null}
 
       {listPosts.length > 0 ? (
-        <BlogList
-          posts={listPosts}
-          tags={listTags}
-          emptyMessage={page?.emptyStateMessage ?? "No posts with that tag yet."}
-        />
+        // nuqs reads useSearchParams, so this bails out of static prerendering. The
+        // fallback is the complete unfiltered list, which is what ends up in the static
+        // HTML — crawlers and no-JS visitors still see every post.
+        <Suspense fallback={<BlogListFallback posts={listPosts} tags={listTags} />}>
+          <BlogList
+            posts={listPosts}
+            tags={listTags}
+            emptyMessage={page?.emptyStateMessage ?? "No posts with that tag yet."}
+          />
+        </Suspense>
       ) : (
         <p className="mt-10 text-soft italic">No posts published yet.</p>
       )}
