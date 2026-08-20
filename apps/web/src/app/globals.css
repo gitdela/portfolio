@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens, lifted verbatim from docs/handoff/. The raw values live on `--kn-*`
+ * custom properties that `data-theme` swaps at runtime; `@theme inline` then maps Tailwind's
+ * utilities onto those variables by reference rather than by value, so `bg-bg` and friends
+ * re-resolve when the theme changes instead of baking in one palette at build time.
+ */
+
+:root,
+:root[data-theme="light"] {
+  --kn-bg: #faf9fc;
+  --kn-ink: #26262b;
+  --kn-muted: #63636b;
+  --kn-soft: #8a8a94;
+  --kn-line: #e6e3ef;
+  --kn-accent: #4a3b8f;
+  --kn-card: #ffffff;
+  --kn-chip: #f1eff7;
+}
+
+:root[data-theme="dark"] {
+  --kn-bg: #15141a;
+  --kn-ink: #ecebf2;
+  --kn-muted: #a8a6b4;
+  --kn-soft: #7c7a8a;
+  --kn-line: #2b2936;
+  --kn-accent: #a89aec;
+  --kn-card: #1d1b25;
+  --kn-chip: #242231;
+}
+
+@theme inline {
+  --color-bg: var(--kn-bg);
+  --color-ink: var(--kn-ink);
+  --color-muted: var(--kn-muted);
+  --color-soft: var(--kn-soft);
+  --color-line: var(--kn-line);
+  --color-accent: var(--kn-accent);
+  --color-card: var(--kn-card);
+  --color-chip: var(--kn-chip);
+
+  --font-sans: var(--font-lato), Arial, sans-serif;
+
+  /*
+   * The handoff uses many half-pixel sizes. Naming them keeps the intent legible and stops
+   * the same magic number being retyped in a dozen components.
+   */
+  --text-micro: 12px;
+  --text-micro--line-height: 1.4;
+  --text-badge: 12.5px;
+  --text-badge--line-height: 1.4;
+  --text-eyebrow: 13px;
+  --text-eyebrow--line-height: 1.4;
+  --text-chip: 13.5px;
+  --text-chip--line-height: 1.5;
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+  --text-nav: 14.5px;
+  --text-nav--line-height: 1.5;
+  --text-body-sm: 15px;
+  --text-body-sm--line-height: 1.6;
+  --text-action: 15.5px;
+  --text-action--line-height: 1.5;
+  --text-body: 16px;
+  --text-body--line-height: 1.65;
+  --text-quote: 16.5px;
+  --text-quote--line-height: 1.65;
+  --text-lead: 17px;
+  --text-lead--line-height: 1.65;
+  --text-lead-lg: 18px;
+  --text-lead-lg--line-height: 1.6;
+  --text-heading: 22px;
+  --text-heading--line-height: 1.35;
+
+  --leading-tight-hero: 1.18;
+
+  /* The 680px column and its fluid gutter, shared by nav, main, and footer. */
+  --container-column: 680px;
+  --spacing-gutter: clamp(18px, 5vw, 28px);
+}
+
+/*
+ * Fluid type. `clamp()` values come straight from the handoff; expressing them as
+ * utilities keeps them out of arbitrary-value syntax at every call site.
+ */
+@utility text-hero {
+  font-size: clamp(30px, 7vw, 42px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+@utility text-page-title {
+  font-size: clamp(28px, 6vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+@utility text-feature-title {
+  font-size: clamp(22px, 4.5vw, 28px);
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* Section eyebrow: 13px uppercase, tracked out. The accent bar is a separate element. */
+@utility section-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+@layer base {
+  html {
+    /* No smooth scrolling for visitors who have asked for reduced motion. */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    transition: background 0.25s;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * The handoff hardcodes #8a8a94 here, which is the light theme's --soft and does not
+   * re-resolve in dark mode. Recorded in docs/handoff-deviations.md.
+   */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-soft);
+  }
+
+  /*
+   * Theme-toggle icons. Both are in the DOM; `data-theme` picks one. Deciding this in CSS
+   * rather than after hydration means the right icon is painted on the first frame.
+   */
+  :root[data-theme="dark"] .icon-when-light,
+  :root[data-theme="light"] .icon-when-dark {
+    display: none;
+  }
+
+  /* The handoff has no visible focus treatment; the plan requires one. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

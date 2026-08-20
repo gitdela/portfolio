@@ -92,6 +92,7 @@ export const siteSettingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
   titleTemplate,
   defaultDescription,
   defaultSocialImage { ${IMAGE_FIELDS} },
+  footerCta { ${CTA_FIELDS} },
   "author": author->{ fullName, role, socialProfiles[]{ platform, url } }
 }`);
 

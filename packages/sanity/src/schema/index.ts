@@ -22,30 +22,14 @@ import { seo } from "./objects/seo.js";
 import { skillGroup } from "./objects/skillGroup.js";
 import { socialProfile } from "./objects/socialProfile.js";
 
-/**
- * Documents that may only ever have one instance. Studio's structure pins each to a fixed
- * document ID and hides the "create new" affordance.
- */
-export const SINGLETON_TYPES = [
-  "siteSettings",
-  "profile",
-  "homePage",
-  "aboutPage",
-  "workPage",
-  "blogPage",
-  "contactPage",
-] as const;
-
-export type SingletonType = (typeof SINGLETON_TYPES)[number];
-
-const SINGLETON_TYPE_SET: ReadonlySet<string> = new Set(SINGLETON_TYPES);
-
-export function isSingletonType(type: string): type is SingletonType {
-  return SINGLETON_TYPE_SET.has(type);
-}
-
-/** Collections a visitor can reach at a URL of their own. */
-export const ROUTED_TYPES = ["project", "post"] as const;
+// Singleton and routed-type constants live in ../singletons.ts so the web app can import
+// them without pulling in the Studio SDK. Re-exported here for Studio-side convenience.
+export {
+  isSingletonType,
+  ROUTED_TYPES,
+  SINGLETON_TYPES,
+  type SingletonType,
+} from "../singletons.js";
 
 const objectTypes: SchemaTypeDefinition[] = [
   accessibleImage,

@@ -662,7 +662,7 @@ export type LayoutQueryResult = {
 
 // Source: ../../packages/sanity/src/queries/index.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0]{  siteName,  tagline,  defaultTitle,  titleTemplate,  defaultDescription,  defaultSocialImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  "author": author->{ fullName, role, socialProfiles[]{ platform, url } }}
+// Query: *[_type == "siteSettings"][0]{  siteName,  tagline,  defaultTitle,  titleTemplate,  defaultDescription,  defaultSocialImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  footerCta { label, destination },  "author": author->{ fullName, role, socialProfiles[]{ platform, url } }}
 export type SiteSettingsQueryResult = {
   siteName: string | null;
   tagline: string | null;
@@ -686,6 +686,10 @@ export type SiteSettingsQueryResult = {
     alt: string | null;
     decorative: boolean | null;
     caption: string | null;
+  } | null;
+  footerCta: {
+    label: string | null;
+    destination: "about" | "blog" | "contact" | "home" | "privacy" | "work" | null;
   } | null;
   author: {
     fullName: string | null;
@@ -1274,7 +1278,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '{\n  "settings": *[_type == "siteSettings"][0]{\n    siteName,\n    tagline,\n    defaultTitle,\n    titleTemplate,\n    defaultDescription,\n    defaultSocialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n    footerCta { label, destination }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    role,\n    wordmarkStrong,\n    wordmarkLight,\n    location,\n    email,\n    "phone": select(phoneIsPublic == true => phone, null),\n    socialProfiles[]{ platform, label, url }\n  }\n}': LayoutQueryResult;
-    '*[_type == "siteSettings"][0]{\n  siteName,\n  tagline,\n  defaultTitle,\n  titleTemplate,\n  defaultDescription,\n  defaultSocialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  "author": author->{ fullName, role, socialProfiles[]{ platform, url } }\n}': SiteSettingsQueryResult;
+    '*[_type == "siteSettings"][0]{\n  siteName,\n  tagline,\n  defaultTitle,\n  titleTemplate,\n  defaultDescription,\n  defaultSocialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  footerCta { label, destination },\n  "author": author->{ fullName, role, socialProfiles[]{ platform, url } }\n}': SiteSettingsQueryResult;
     '{\n  "page": *[_type == "homePage"][0]{\n    showAvailabilityBadge,\n    heading,\n    subheading,\n    primaryCta { label, destination },\n    secondaryCta { label, destination },\n    skillsHeading,\n    featuredWorkHeading,\n    featuredProjects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    testimonialsHeading,\n    "testimonials": testimonials[@->isVerified == true]->{ _id, quote, attribution },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    availability { isAvailable, label },\n    skillGroups[]{ label, skills }\n  }\n}': HomePageQueryResult;
     '{\n  "page": *[_type == "aboutPage"][0]{\n    heading,\n    intro,\n    experienceHeading,\n    experiences[]->{ _id, periodLabel, title, summary },\n    skillsHeading,\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    role,\n    biography,\n    portrait { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n    skillGroups[]{ label, skills }\n  }\n}': AboutPageQueryResult;
     '{\n  "page": *[_type == "workPage"][0]{\n    heading,\n    intro,\n    projects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  }\n}': WorkPageQueryResult;

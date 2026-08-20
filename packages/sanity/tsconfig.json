@@ -1,5 +1,9 @@
 {
   "extends": "@portfolio/typescript-config/library.json",
+  "compilerOptions": {
+    // "bun" supplies the `bun:test` module types for the co-located unit tests.
+    "types": ["node", "bun"]
+  },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }
