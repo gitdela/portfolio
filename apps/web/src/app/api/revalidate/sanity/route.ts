@@ -26,6 +26,8 @@ interface WebhookPayload {
  * request is rejected without touching the cache.
  */
 export async function POST(request: NextRequest): Promise<Response> {
+  // Secret rotations require a fresh Git-triggered deployment so the running function and
+  // Sanity webhook begin using the new value together.
   const { isValidSignature, body } = await parseBody<WebhookPayload>(
     request,
     serverEnv().SANITY_REVALIDATE_SECRET,
