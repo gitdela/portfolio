@@ -53,6 +53,14 @@ export const project = defineType({
       validation: (rule) => rule.max(160),
     }),
     defineField({
+      name: "listingImage",
+      title: "Project image",
+      type: "accessibleImage",
+      group: "overview",
+      description:
+        "The wide image shown with this project on the homepage and Work page. Leave empty to keep the text-only layout.",
+    }),
+    defineField({
       name: "role",
       title: "Role",
       type: "string",
@@ -182,6 +190,6 @@ export const project = defineType({
     },
   ],
   preview: {
-    select: { title: "title", subtitle: "dateLabel", media: "caseStudy.heroImage" },
+    select: { title: "title", subtitle: "dateLabel", media: "listingImage" },
   },
 });

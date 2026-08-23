@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { Route } from "next";
 import Link from "next/link";
 
+import { ProjectListingImage } from "@/components/content/ProjectListingImage";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CARD_CLASS, Chip, PageMain, PrimaryPill, SecondaryPill } from "@/components/ui/primitives";
 import { loadQuery } from "@/lib/sanity/loadQuery";
@@ -103,16 +104,19 @@ export default async function HomePage() {
 
               return (
                 <Link key={project._id} href={href} className={CARD_CLASS}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <span className="text-lead-lg font-bold">{project.title}</span>
-                    <span className="text-eyebrow font-bold whitespace-nowrap text-accent">
-                      {project.hasCaseStudy ? "Case study →" : project.dateLabel}
-                    </span>
+                  <ProjectListingImage image={project.listingImage} variant="card" />
+                  <div className="px-[22px] py-5">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <span className="text-lead-lg font-bold">{project.title}</span>
+                      <span className="text-eyebrow font-bold whitespace-nowrap text-accent">
+                        {project.hasCaseStudy ? "Case study →" : project.dateLabel}
+                      </span>
+                    </div>
+                    {/* The handoff runs a shorter blurb here than on the Work index. */}
+                    <p className="mt-1.5 mb-0 text-body-sm text-muted">
+                      {project.cardSummary ?? project.summary}
+                    </p>
                   </div>
-                  {/* The handoff runs a shorter blurb here than on the Work index. */}
-                  <p className="mt-1.5 mb-0 text-body-sm text-muted">
-                    {project.cardSummary ?? project.summary}
-                  </p>
                 </Link>
               );
             })}

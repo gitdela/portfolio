@@ -38,6 +38,38 @@ async function run<T = never>(query: string, params: Record<string, unknown> = {
   return (await value.get()) as T;
 }
 
+const listingImageAsset = {
+  _id: "image-project-listing",
+  _type: "sanity.imageAsset",
+  url: "https://cdn.sanity.io/images/example/production/project-listing-1600x900.jpg",
+  metadata: {
+    dimensions: { width: 1600, height: 900 },
+    lqip: "data:image/jpeg;base64,preview",
+  },
+};
+
+function datasetWithListingImage() {
+  return [
+    ...documents.map((document) =>
+      document._id === "project-mybitstore"
+        ? {
+            ...document,
+            listingImage: {
+              _type: "image",
+              asset: { _type: "reference", _ref: listingImageAsset._id },
+              hotspot: { _type: "sanity.imageHotspot", x: 0.5, y: 0.45, height: 0.8, width: 0.9 },
+              crop: { _type: "sanity.imageCrop", top: 0.05, bottom: 0.05, left: 0, right: 0 },
+              alt: "Mybitstore dashboard",
+              decorative: false,
+              caption: "The redesigned marketplace dashboard",
+            },
+          }
+        : document,
+    ),
+    listingImageAsset,
+  ];
+}
+
 describe("layoutQuery", () => {
   test("returns the wordmark and footer identity", async () => {
     const data = await run<{ profile: Record<string, unknown> }>(layoutQuery);
@@ -87,6 +119,35 @@ describe("homePageQuery", () => {
     expect(byTitle["Banking web application"]).toBe(false);
   });
 
+  test("projects the accessible listing image and its optimization metadata", async () => {
+    const value = await evaluate(parse(homePageQuery), {
+      dataset: datasetWithListingImage(),
+      params: {},
+    });
+    const data = (await value.get()) as {
+      page: {
+        featuredProjects: {
+          title: string;
+          listingImage: {
+            asset: { url: string; metadata: { dimensions: { width: number; height: number } } };
+            alt: string;
+            decorative: boolean;
+            caption: string;
+          } | null;
+        }[];
+      };
+    };
+    const project = data.page.featuredProjects.find(
+      ({ title }) => title === "Mybitstore — web platform",
+    );
+
+    expect(project?.listingImage?.asset.url).toContain("project-listing-1600x900.jpg");
+    expect(project?.listingImage?.asset.metadata.dimensions).toEqual({ width: 1600, height: 900 });
+    expect(project?.listingImage?.alt).toBe("Mybitstore dashboard");
+    expect(project?.listingImage?.decorative).toBe(false);
+    expect(project?.listingImage?.caption).toBe("The redesigned marketplace dashboard");
+  });
+
   test("returns testimonials as objects, not nulls", async () => {
     // Regression: an earlier filter-then-project form silently produced Array<null>.
     const { page } = await run<{ page: { testimonials: unknown[] } }>(homePageQuery);
@@ -124,6 +185,14 @@ describe("workPageQuery", () => {
     // The handoff shipped these as href="#"; they must come back empty so the action hides.
     expect(byTitle["Shipping logistics platform"]).toBeNull();
     expect(byTitle["Banking web application"]).toBeNull();
+  });
+
+  test("keeps projects without a listing image explicitly image-free", async () => {
+    const { page } = await run<{
+      page: { projects: { title: string; listingImage: unknown }[] };
+    }>(workPageQuery);
+
+    expect(page.projects.every((project) => project.listingImage === null)).toBe(true);
   });
 });
 

@@ -5,6 +5,7 @@ import type { Route } from "next";
 import Link from "next/link";
 
 import { InlineText } from "@/components/content/PortableText";
+import { ProjectListingImage } from "@/components/content/ProjectListingImage";
 import { PageMain } from "@/components/ui/primitives";
 import { loadQuery } from "@/lib/sanity/loadQuery";
 import { documentTypeTag } from "@/lib/sanity/tags";
@@ -38,6 +39,8 @@ export default async function WorkPage() {
         <div className="mt-14 grid gap-11">
           {projects.map((project) => (
             <article key={project._id}>
+              <ProjectListingImage image={project.listingImage} variant="standalone" />
+
               <div className="flex items-baseline justify-between gap-4">
                 <h2 className="m-0 text-heading font-bold">{project.title}</h2>
                 <span className="text-eyebrow font-bold whitespace-nowrap text-accent">

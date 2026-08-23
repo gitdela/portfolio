@@ -246,6 +246,14 @@
         },
         "optional": true
       },
+      "listingImage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "accessibleImage"
+        },
+        "optional": true
+      },
       "role": {
         "type": "objectAttribute",
         "value": {

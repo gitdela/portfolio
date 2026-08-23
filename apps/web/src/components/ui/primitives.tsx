@@ -90,4 +90,4 @@ export function Chip({ children }: { children: React.ReactNode }) {
 
 /** Card surface: 1px line border, card fill, 12px radius, accent border on hover. */
 export const CARD_CLASS =
-  "block rounded-xl border border-line bg-card px-[22px] py-5 text-ink no-underline transition-colors hover:border-accent hover:no-underline";
+  "block overflow-hidden rounded-xl border border-line bg-card text-ink no-underline transition-colors hover:border-accent hover:no-underline";
