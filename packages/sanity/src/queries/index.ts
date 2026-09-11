@@ -31,6 +31,8 @@ const CTA_FIELDS = /* groq */ `label, destination`;
 
 const TAG_FIELDS = /* groq */ `_id, title, "slug": slug.current`;
 
+const PROJECT_LINK_FIELDS = /* groq */ `label, url`;
+
 const PROJECT_CARD_FIELDS = /* groq */ `
   _id,
   title,
@@ -45,6 +47,7 @@ const PROJECT_CARD_FIELDS = /* groq */ `
   liveUrl,
   liveLabel,
   repositoryUrl,
+  additionalLinks[]{ ${PROJECT_LINK_FIELDS} },
   "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)
 `;
 

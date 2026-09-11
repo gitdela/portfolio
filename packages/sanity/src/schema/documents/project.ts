@@ -126,6 +126,16 @@ export const project = defineType({
       description: "Leave empty to hide the repository action.",
       validation: (rule) => rule.uri({ scheme: ["https"] }),
     }),
+    defineField({
+      name: "additionalLinks",
+      title: "Additional links",
+      type: "array",
+      group: "overview",
+      of: [{ type: "projectLink" }],
+      description:
+        "For a project that ships more than one surface. The main action stays in Live URL; these render beside it.",
+      validation: (rule) => rule.max(3).unique(),
+    }),
 
     defineField({
       name: "caseStudy",

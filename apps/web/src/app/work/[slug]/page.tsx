@@ -7,6 +7,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { InlineText } from "@/components/content/PortableText";
+import { ProjectLinks } from "@/components/content/ProjectLinks";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PageMain, PrimaryPill } from "@/components/ui/primitives";
@@ -101,6 +102,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </span>
         ) : null}
       </div>
+
+      <ProjectLinks
+        liveUrl={project.liveUrl}
+        liveLabel={project.liveLabel}
+        additionalLinks={project.additionalLinks}
+        repositoryUrl={project.repositoryUrl}
+        className="mt-4"
+      />
 
       {hasImage(hero) && hero ? (
         <div className="mt-9">

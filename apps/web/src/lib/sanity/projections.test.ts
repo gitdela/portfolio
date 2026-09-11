@@ -103,9 +103,9 @@ describe("homePageQuery", () => {
   test("resolves featured projects in the order the editor set", async () => {
     const { page } = await run<{ page: { featuredProjects: { title: string }[] } }>(homePageQuery);
     expect(page.featuredProjects.map((p) => p.title)).toEqual([
+      "Pexwa Bitcoin Exchange",
       "Mybitstore — web platform",
       "Shipping logistics platform",
-      "Banking web application",
     ]);
   });
 
@@ -114,9 +114,9 @@ describe("homePageQuery", () => {
       page: { featuredProjects: { title: string; hasCaseStudy: boolean }[] };
     }>(homePageQuery);
     const byTitle = Object.fromEntries(page.featuredProjects.map((p) => [p.title, p.hasCaseStudy]));
+    expect(byTitle["Pexwa Bitcoin Exchange"]).toBe(true);
     expect(byTitle["Mybitstore — web platform"]).toBe(true);
     expect(byTitle["Shipping logistics platform"]).toBe(false);
-    expect(byTitle["Banking web application"]).toBe(false);
   });
 
   test("projects the accessible listing image and its optimization metadata", async () => {
@@ -171,8 +171,8 @@ describe("homePageQuery", () => {
 describe("workPageQuery", () => {
   test("keeps the editor's project order", async () => {
     const { page } = await run<{ page: { projects: { title: string }[] } }>(workPageQuery);
-    expect(page.projects[0]?.title).toBe("Mybitstore — web platform");
-    expect(page.projects).toHaveLength(3);
+    expect(page.projects[0]?.title).toBe("Pexwa Bitcoin Exchange");
+    expect(page.projects).toHaveLength(4);
   });
 
   test("returns no live URL for projects that have none, rather than a placeholder", async () => {
@@ -193,6 +193,29 @@ describe("workPageQuery", () => {
     }>(workPageQuery);
 
     expect(page.projects.every((project) => project.listingImage === null)).toBe(true);
+  });
+
+  test("projects every additional link for a project that ships several surfaces", async () => {
+    const { page } = await run<{
+      page: { projects: { title: string; additionalLinks: { label: string; url: string }[] }[] };
+    }>(workPageQuery);
+    const pexwa = page.projects.find(({ title }) => title === "Pexwa Bitcoin Exchange");
+
+    expect(pexwa?.additionalLinks).toEqual([
+      { label: "Website ↗", url: "https://pexwa.app" },
+      { label: "Admin console ↗", url: "https://zeusdev.pexwa.app" },
+    ]);
+  });
+
+  test("returns no additional links for single-surface projects, rather than an empty array", async () => {
+    // The renderer treats null and [] the same, but the projection should not invent a value.
+    const { page } = await run<{
+      page: { title: string; projects: { title: string; additionalLinks: unknown }[] };
+    }>(workPageQuery);
+    const byTitle = Object.fromEntries(page.projects.map((p) => [p.title, p.additionalLinks]));
+
+    expect(byTitle["Mybitstore — web platform"]).toBeNull();
+    expect(byTitle["Banking web application"]).toBeNull();
   });
 });
 
@@ -237,7 +260,22 @@ describe("blogPageQuery", () => {
 describe("routed document queries", () => {
   test("only projects with case-study content get a slug", async () => {
     const slugs = await run<string[]>(caseStudySlugsQuery);
-    expect(slugs).toEqual(["mybitstore"]);
+    expect([...slugs].sort()).toEqual(["mybitstore", "pexwa-bitcoin-exchange"]);
+  });
+
+  test("caseStudyQuery carries the live actions through to the case-study page", async () => {
+    const project = await run<{
+      liveUrl: string;
+      liveLabel: string;
+      additionalLinks: { label: string; url: string }[];
+    }>(caseStudyQuery, { slug: "pexwa-bitcoin-exchange" });
+
+    expect(project.liveUrl).toBe("https://app.pexwa.app");
+    expect(project.liveLabel).toBe("Live app ↗");
+    expect(project.additionalLinks.map((link) => link.url)).toEqual([
+      "https://pexwa.app",
+      "https://zeusdev.pexwa.app",
+    ]);
   });
 
   test("caseStudyQuery resolves related writing and the related tag", async () => {
@@ -272,7 +310,10 @@ describe("feed and sitemap queries", () => {
   test("sitemapQuery lists posts and only case-study projects", async () => {
     const data = await run<{ posts: unknown[]; caseStudies: { slug: string }[] }>(sitemapQuery);
     expect(data.posts.length).toBeGreaterThan(0);
-    expect(data.caseStudies.map((c) => c.slug)).toEqual(["mybitstore"]);
+    expect(data.caseStudies.map((c) => c.slug).sort()).toEqual([
+      "mybitstore",
+      "pexwa-bitcoin-exchange",
+    ]);
   });
 
   test("rssQuery returns posts newest first and caps the feed", async () => {

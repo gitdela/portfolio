@@ -5,6 +5,7 @@ import type { Route } from "next";
 import Link from "next/link";
 
 import { InlineText } from "@/components/content/PortableText";
+import { ProjectLinks } from "@/components/content/ProjectLinks";
 import { ProjectListingImage } from "@/components/content/ProjectListingImage";
 import { PageMain } from "@/components/ui/primitives";
 import { loadQuery } from "@/lib/sanity/loadQuery";
@@ -54,22 +55,13 @@ export default async function WorkPage() {
                 <p className="mt-2 mb-0 text-tag text-soft italic">{project.stack.join(" · ")}</p>
               ) : null}
 
-              <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-2 text-body-sm font-bold">
-                {/*
-                  Actions without a real destination are omitted rather than rendered as
-                  "#", so the page never offers a link that goes nowhere.
-                */}
-                {project.liveUrl ? (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:underline"
-                  >
-                    {project.liveLabel ?? "Live site ↗"}
-                  </a>
-                ) : null}
-
+              <ProjectLinks
+                liveUrl={project.liveUrl}
+                liveLabel={project.liveLabel}
+                additionalLinks={project.additionalLinks}
+                repositoryUrl={project.repositoryUrl}
+                className="mt-2.5"
+              >
                 {project.hasCaseStudy && project.slug ? (
                   <Link
                     href={`/work/${project.slug}` as Route}
@@ -78,18 +70,7 @@ export default async function WorkPage() {
                     Read the case study →
                   </Link>
                 ) : null}
-
-                {project.repositoryUrl ? (
-                  <a
-                    href={project.repositoryUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:underline"
-                  >
-                    View on GitHub →
-                  </a>
-                ) : null}
-              </div>
+              </ProjectLinks>
             </article>
           ))}
         </div>
