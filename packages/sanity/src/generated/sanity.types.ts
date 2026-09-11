@@ -71,6 +71,11 @@ export type Project = {
   liveUrl?: string;
   liveLabel?: string;
   repositoryUrl?: string;
+  additionalLinks?: Array<
+    {
+      _key: string;
+    } & ProjectLink
+  >;
   caseStudy?: {
     headline?: string;
     heroImage?: AccessibleImage;
@@ -432,6 +437,12 @@ export type SkillGroup = {
   skills?: Array<string>;
 };
 
+export type ProjectLink = {
+  _type: "projectLink";
+  label?: string;
+  url?: string;
+};
+
 export type CodeBlock = {
   _type: "codeBlock";
   language?:
@@ -600,6 +611,7 @@ export type AllSanitySchemaTypes =
   | Profile
   | SocialProfile
   | SkillGroup
+  | ProjectLink
   | CodeBlock
   | Callout
   | SanityImageCrop
@@ -705,7 +717,7 @@ export type SiteSettingsQueryResult = {
 
 // Source: ../../packages/sanity/src/queries/index.ts
 // Variable: homePageQuery
-// Query: {  "page": *[_type == "homePage"][0]{    showAvailabilityBadge,    heading,    subheading,    primaryCta { label, destination },    secondaryCta { label, destination },    skillsHeading,    featuredWorkHeading,    featuredProjects[]->{   _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current) },    testimonialsHeading,    "testimonials": testimonials[@->isVerified == true]->{ _id, quote, attribution },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  },  "profile": *[_type == "profile"][0]{    fullName,    availability { isAvailable, label },    skillGroups[]{ label, skills }  }}
+// Query: {  "page": *[_type == "homePage"][0]{    showAvailabilityBadge,    heading,    subheading,    primaryCta { label, destination },    secondaryCta { label, destination },    skillsHeading,    featuredWorkHeading,    featuredProjects[]->{   _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  additionalLinks[]{ label, url },  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current) },    testimonialsHeading,    "testimonials": testimonials[@->isVerified == true]->{ _id, quote, attribution },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  },  "profile": *[_type == "profile"][0]{    fullName,    availability { isAvailable, label },    skillGroups[]{ label, skills }  }}
 export type HomePageQueryResult = {
   page: {
     showAvailabilityBadge: boolean | null;
@@ -752,6 +764,10 @@ export type HomePageQueryResult = {
       liveUrl: string | null;
       liveLabel: string | null;
       repositoryUrl: string | null;
+      additionalLinks: Array<{
+        label: string | null;
+        url: string | null;
+      }> | null;
       hasCaseStudy: false | true;
     }> | null;
     testimonialsHeading: string | null;
@@ -867,7 +883,7 @@ export type AboutPageQueryResult = {
 
 // Source: ../../packages/sanity/src/queries/index.ts
 // Variable: workPageQuery
-// Query: {  "page": *[_type == "workPage"][0]{    heading,    intro,    projects[]->{   _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current) },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  }}
+// Query: {  "page": *[_type == "workPage"][0]{    heading,    intro,    projects[]->{   _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  additionalLinks[]{ label, url },  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current) },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  }}
 export type WorkPageQueryResult = {
   page: {
     heading: string | null;
@@ -903,6 +919,10 @@ export type WorkPageQueryResult = {
       liveUrl: string | null;
       liveLabel: string | null;
       repositoryUrl: string | null;
+      additionalLinks: Array<{
+        label: string | null;
+        url: string | null;
+      }> | null;
       hasCaseStudy: false | true;
     }> | null;
     seo: {
@@ -1094,7 +1114,7 @@ export type CaseStudySlugsQueryResult = Array<string | null>;
 
 // Source: ../../packages/sanity/src/queries/index.ts
 // Variable: caseStudyQuery
-// Query: *[_type == "project" && slug.current == $slug][0]{      _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current),    caseStudy {      headline,      heroImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },      problem,      approach,      supportingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },      result,      relatedPosts[]->{ _id, title, "slug": slug.current },      relatedTag->{ _id, title, "slug": slug.current }    },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  }
+// Query: *[_type == "project" && slug.current == $slug][0]{      _id,  title,  "slug": slug.current,  summary,  cardSummary,  listingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },  role,  dateLabel,  timeline,  stack,  liveUrl,  liveLabel,  repositoryUrl,  additionalLinks[]{ label, url },  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current),    caseStudy {      headline,      heroImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },      problem,      approach,      supportingImage {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption },      result,      relatedPosts[]->{ _id, title, "slug": slug.current },      relatedTag->{ _id, title, "slug": slug.current }    },    seo {   title,  description,  noIndex,  image {   asset->{    _id,    url,    metadata { dimensions { width, height }, lqip }  },  hotspot,  crop,  alt,  decorative,  caption } }  }
 export type CaseStudyQueryResult = {
   _id: string;
   title: string | null;
@@ -1126,6 +1146,10 @@ export type CaseStudyQueryResult = {
   liveUrl: string | null;
   liveLabel: string | null;
   repositoryUrl: string | null;
+  additionalLinks: Array<{
+    label: string | null;
+    url: string | null;
+  }> | null;
   hasCaseStudy: false | true;
   caseStudy: {
     headline: string | null;
@@ -1338,13 +1362,13 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '{\n  "settings": *[_type == "siteSettings"][0]{\n    siteName,\n    tagline,\n    defaultTitle,\n    titleTemplate,\n    defaultDescription,\n    defaultSocialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n    footerCta { label, destination }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    role,\n    wordmarkStrong,\n    wordmarkLight,\n    location,\n    email,\n    "phone": select(phoneIsPublic == true => phone, null),\n    socialProfiles[]{ platform, label, url }\n  }\n}': LayoutQueryResult;
     '*[_type == "siteSettings"][0]{\n  siteName,\n  tagline,\n  defaultTitle,\n  titleTemplate,\n  defaultDescription,\n  defaultSocialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  footerCta { label, destination },\n  "author": author->{ fullName, role, socialProfiles[]{ platform, url } }\n}': SiteSettingsQueryResult;
-    '{\n  "page": *[_type == "homePage"][0]{\n    showAvailabilityBadge,\n    heading,\n    subheading,\n    primaryCta { label, destination },\n    secondaryCta { label, destination },\n    skillsHeading,\n    featuredWorkHeading,\n    featuredProjects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    testimonialsHeading,\n    "testimonials": testimonials[@->isVerified == true]->{ _id, quote, attribution },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    availability { isAvailable, label },\n    skillGroups[]{ label, skills }\n  }\n}': HomePageQueryResult;
+    '{\n  "page": *[_type == "homePage"][0]{\n    showAvailabilityBadge,\n    heading,\n    subheading,\n    primaryCta { label, destination },\n    secondaryCta { label, destination },\n    skillsHeading,\n    featuredWorkHeading,\n    featuredProjects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  additionalLinks[]{ label, url },\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    testimonialsHeading,\n    "testimonials": testimonials[@->isVerified == true]->{ _id, quote, attribution },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    availability { isAvailable, label },\n    skillGroups[]{ label, skills }\n  }\n}': HomePageQueryResult;
     '{\n  "page": *[_type == "aboutPage"][0]{\n    heading,\n    intro,\n    experienceHeading,\n    experiences[]->{ _id, periodLabel, title, summary },\n    skillsHeading,\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    fullName,\n    role,\n    biography,\n    portrait { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n    skillGroups[]{ label, skills }\n  }\n}': AboutPageQueryResult;
-    '{\n  "page": *[_type == "workPage"][0]{\n    heading,\n    intro,\n    projects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  }\n}': WorkPageQueryResult;
+    '{\n  "page": *[_type == "workPage"][0]{\n    heading,\n    intro,\n    projects[]->{ \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  additionalLinks[]{ label, url },\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  }\n}': WorkPageQueryResult;
     '{\n  "page": *[_type == "blogPage"][0]{\n    heading,\n    intro,\n    emptyStateMessage,\n    featuredPost->{ \n  _id,\n  title,\n  "slug": slug.current,\n  standfirst,\n  publishedAt,\n  category->{ _id, title, "slug": slug.current },\n  tags[]->{ _id, title, "slug": slug.current },\n  coverImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "posts": *[_type == "post" && defined(slug.current) && defined(publishedAt)]\n    | order(publishedAt desc){ \n  _id,\n  title,\n  "slug": slug.current,\n  standfirst,\n  publishedAt,\n  category->{ _id, title, "slug": slug.current },\n  tags[]->{ _id, title, "slug": slug.current },\n  coverImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n },\n  "tags": *[_type == "tag" && count(*[_type == "post" && references(^._id) && defined(slug.current)]) > 0]\n    | order(title asc){ _id, title, "slug": slug.current }\n}': BlogPageQueryResult;
     '{\n  "page": *[_type == "contactPage"][0]{\n    heading,\n    intro,\n    elsewhereHeading,\n    submitLabel,\n    pendingLabel,\n    successMessage,\n    errorMessage,\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  },\n  "profile": *[_type == "profile"][0]{\n    email,\n    "phone": select(phoneIsPublic == true => phone, null),\n    socialProfiles[]{ platform, label, url }\n  }\n}': ContactPageQueryResult;
     '\n  *[_type == "project" && defined(slug.current) && defined(caseStudy.headline)].slug.current\n': CaseStudySlugsQueryResult;
-    '\n  *[_type == "project" && slug.current == $slug][0]{\n    \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n,\n    caseStudy {\n      headline,\n      heroImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n      problem,\n      approach,\n      supportingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n      result,\n      relatedPosts[]->{ _id, title, "slug": slug.current },\n      relatedTag->{ _id, title, "slug": slug.current }\n    },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  }\n': CaseStudyQueryResult;
+    '\n  *[_type == "project" && slug.current == $slug][0]{\n    \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  cardSummary,\n  listingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n  role,\n  dateLabel,\n  timeline,\n  stack,\n  liveUrl,\n  liveLabel,\n  repositoryUrl,\n  additionalLinks[]{ label, url },\n  "hasCaseStudy": defined(caseStudy.headline) && defined(slug.current)\n,\n    caseStudy {\n      headline,\n      heroImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n      problem,\n      approach,\n      supportingImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n      result,\n      relatedPosts[]->{ _id, title, "slug": slug.current },\n      relatedTag->{ _id, title, "slug": slug.current }\n    },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n }\n  }\n': CaseStudyQueryResult;
     '\n  *[_type == "post" && defined(slug.current) && defined(publishedAt)].slug.current\n': PostSlugsQueryResult;
     '\n  *[_type == "post" && slug.current == $slug][0]{\n    \n  _id,\n  title,\n  "slug": slug.current,\n  standfirst,\n  publishedAt,\n  category->{ _id, title, "slug": slug.current },\n  tags[]->{ _id, title, "slug": slug.current },\n  coverImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n,\n    body,\n    socialImage { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n },\n    seo { \n  title,\n  description,\n  noIndex,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata { dimensions { width, height }, lqip }\n  },\n  hotspot,\n  crop,\n  alt,\n  decorative,\n  caption\n }\n },\n    "author": *[_type == "siteSettings"][0].author->{ fullName, role }\n  }\n': PostQueryResult;
     '{\n  "posts": *[_type == "post" && defined(slug.current) && defined(publishedAt)]{\n    "slug": slug.current,\n    publishedAt,\n    _updatedAt\n  },\n  "caseStudies": *[_type == "project" && defined(slug.current) && defined(caseStudy.headline)]{\n    "slug": slug.current,\n    _updatedAt\n  }\n}': SitemapQueryResult;

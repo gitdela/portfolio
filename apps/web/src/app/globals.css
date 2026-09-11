@@ -169,3 +169,24 @@
     }
   }
 }
+
+/*
+ * iOS Safari zooms the viewport whenever a focused control's font-size is below 16px, and
+ * the form fields use --text-body-sm, which the handoff sets to 15px. Raising it to 16px on
+ * touch pointers leaves the desktop type scale exactly as specified and costs one pixel
+ * where nobody can see it.
+ *
+ * Deliberately not `maximum-scale=1` on the viewport meta: that stops the zoom by disabling
+ * pinch-zoom for the entire site, which fails WCAG 1.4.4.
+ *
+ * Unlayered on purpose. Tailwind's utilities sit in @layer utilities, and unlayered rules
+ * beat layered ones, so this wins over the `text-body-sm` utility on the element without
+ * needing !important.
+ */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

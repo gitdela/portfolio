@@ -17,6 +17,7 @@ import { accessibleImage } from "./objects/accessibleImage.js";
 import { callToAction } from "./objects/callToAction.js";
 import { callout } from "./objects/callout.js";
 import { codeBlock } from "./objects/codeBlock.js";
+import { projectLink } from "./objects/projectLink.js";
 import { inlineText, richText } from "./objects/richText.js";
 import { seo } from "./objects/seo.js";
 import { skillGroup } from "./objects/skillGroup.js";
@@ -37,6 +38,7 @@ const objectTypes: SchemaTypeDefinition[] = [
   callout,
   codeBlock,
   inlineText,
+  projectLink,
   richText,
   seo,
   skillGroup,
@@ -83,6 +85,7 @@ export {
   post,
   profile,
   project,
+  projectLink,
   richText,
   seo,
   siteSettings,
