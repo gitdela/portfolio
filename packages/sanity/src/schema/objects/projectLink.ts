@@ -15,7 +15,8 @@ export const projectLink = defineType({
       name: "label",
       title: "Label",
       type: "string",
-      description: 'What the visitor reads, for example "Admin console ↗".',
+      description:
+        'What the visitor reads, for example "Admin console". The site adds the outward arrow itself; do not type one.',
       validation: (rule) => rule.required().max(30),
     }),
     defineField({

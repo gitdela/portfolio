@@ -115,8 +115,9 @@ export const project = defineType({
       title: "Live action label",
       type: "string",
       group: "overview",
-      description: 'For example "Live site ↗" or "Live demo ↗".',
-      initialValue: "Live site ↗",
+      description:
+        'For example "Live site" or "Live demo". The site adds the outward arrow itself; do not type one.',
+      initialValue: "Live site",
     }),
     defineField({
       name: "repositoryUrl",

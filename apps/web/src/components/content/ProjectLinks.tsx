@@ -23,6 +23,33 @@ interface ProjectLinksProps {
 
 const ACTION_CLASS = "text-accent hover:underline";
 
+/*
+ * The outward arrow is an SVG rather than the "↗" character: U+2197 has an Apple Color
+ * Emoji glyph, and iOS falls back to it when the webfont has no glyph of its own, so
+ * iPhones rendered the blue emoji square. Labels are stripped of any arrow an editor
+ * types so the character can never reach the page.
+ */
+function stripArrow(label: string): string {
+  return label.replace(/\s*[\u2197\u2192][\uFE0E\uFE0F]?\s*$/u, "");
+}
+
+function OutwardArrow() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mb-[0.1em] ml-1 inline-block h-[0.62em] w-[0.62em]"
+    >
+      <path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" />
+    </svg>
+  );
+}
+
 export function ProjectLinks({
   liveUrl,
   liveLabel,
@@ -41,7 +68,8 @@ export function ProjectLinks({
     <div className={`flex flex-wrap gap-x-5 gap-y-2 text-body-sm font-bold ${className}`}>
       {liveUrl ? (
         <a href={liveUrl} target="_blank" rel="noopener noreferrer" className={ACTION_CLASS}>
-          {liveLabel ?? "Live site ↗"}
+          {stripArrow(liveLabel ?? "Live site")}
+          <OutwardArrow />
         </a>
       ) : null}
 
@@ -53,7 +81,8 @@ export function ProjectLinks({
           rel="noopener noreferrer"
           className={ACTION_CLASS}
         >
-          {link.label}
+          {stripArrow(link.label)}
+          <OutwardArrow />
         </a>
       ))}
 
