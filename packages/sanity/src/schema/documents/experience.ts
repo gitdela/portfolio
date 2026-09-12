@@ -26,7 +26,7 @@ export const experience = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      description: 'For example "Front-end Developer — Mybitstore Technologies".',
+      description: 'For example "Front-end Developer, Mybitstore Technologies".',
       validation: (rule) => rule.required(),
     }),
     defineField({

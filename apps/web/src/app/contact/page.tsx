@@ -38,7 +38,7 @@ export default async function ContactPage() {
         siteKey={publicEnv.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
         submitLabel={page?.submitLabel ?? "Send message →"}
         pendingLabel={page?.pendingLabel ?? "Sending…"}
-        successMessage={page?.successMessage ?? "Thanks — your message is on its way."}
+        successMessage={page?.successMessage ?? "Thanks, your message is on its way."}
         errorMessage={page?.errorMessage ?? "Something went wrong sending that. Please try again."}
       />
 

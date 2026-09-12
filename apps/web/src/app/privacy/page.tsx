@@ -66,7 +66,7 @@ export default function PrivacyPage() {
       <section className="mt-10">
         <SectionHeading spacing="narrow">Getting in touch</SectionHeading>
         <p className="m-0 text-muted">
-          If you would like the email you sent me deleted, reply to it and ask — that is the whole
+          If you would like the email you sent me deleted, reply to it and ask; that is the whole
           process, because the message only ever exists in my inbox.
         </p>
       </section>

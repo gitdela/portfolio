@@ -27,7 +27,8 @@ export const homePage = defineType({
       type: "text",
       rows: 3,
       group: "hero",
-      validation: (rule) => rule.required().max(120),
+      description: "Optional; when empty the hero starts with the subheading.",
+      validation: (rule) => rule.max(120),
     }),
     defineField({
       name: "subheading",

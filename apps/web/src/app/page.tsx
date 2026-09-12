@@ -49,7 +49,7 @@ export default async function HomePage() {
           </div>
         ) : null}
 
-        <h1 className="text-hero m-0">{page?.heading}</h1>
+        {page?.heading ? <h1 className="text-hero m-0">{page.heading}</h1> : null}
 
         {page?.subheading ? (
           <p className="mt-4 mb-0 text-lead-lg text-muted">{page.subheading}</p>

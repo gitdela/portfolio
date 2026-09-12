@@ -88,17 +88,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
       <div className="mt-3.5 flex flex-wrap gap-x-7 gap-y-2.5 text-small text-soft">
         {project.role ? (
           <span>
-            <strong className="font-bold text-ink">Role</strong> — {project.role}
+            <strong className="font-bold text-ink">Role:</strong> {project.role}
           </span>
         ) : null}
         {project.timeline ? (
           <span>
-            <strong className="font-bold text-ink">Timeline</strong> — {project.timeline}
+            <strong className="font-bold text-ink">Timeline:</strong> {project.timeline}
           </span>
         ) : null}
         {project.stack?.length ? (
           <span>
-            <strong className="font-bold text-ink">Stack</strong> — {project.stack.join(", ")}
+            <strong className="font-bold text-ink">Stack:</strong> {project.stack.join(", ")}
           </span>
         ) : null}
       </div>
